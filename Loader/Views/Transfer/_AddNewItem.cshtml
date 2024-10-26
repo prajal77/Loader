@@ -1,0 +1,305 @@
+﻿@model Loader.ViewModel.Metadata.FgetStoreTransferItemPening_ResultMetadata
+
+@{
+    Layout = null;
+    Loader.Service.TransferService TranService = new Loader.Service.TransferService();
+    if (Model != null && Model.ItemId != 0)
+    {
+        Loader.Repository.GenericUnitOfWork uow = new Loader.Repository.GenericUnitOfWork();
+        //Model.ItemName = uow.Repository<Loader.Models.ItemMaster>().FindBy(x => x.ItemId == Model.ItemId).FirstOrDefault().ItemName;
+        //IsEditVald = !TranService.IsEditValid(Model.RMId);
+    }
+
+    var remainingTransfer = Model.ReqQnty - Model.TrQnty;
+
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+
+<style>
+    .containers {
+        width: 100%;
+        flex-shrink: initial;
+    }
+    /* Tablet View */
+       @@media screen and (min-width:481px) and (max-width:768px) {
+        .containers{
+          grid-template-columns: repeat(3,1fr);
+        }
+      }
+       /* Laptop View */
+       @@media screen and (min-width:769px) and (max-width:1024px) {
+        .containers{
+          grid-template-columns: repeat(4,1fr);
+        }
+      }
+</style>
+
+@if (ViewBag.Function != "Transfer")
+{
+    <div>this testing</div>
+}
+else
+{
+    if (remainingTransfer != 0)
+    {
+<tr data-id="@Model.RdId" class="containers">
+
+    @using (Html.BeginCollectionItem("ItemMasterList"))
+    {
+
+        @Html.HiddenFor(model => model.RdId, htmlAttributes: new { @id = "RdId" })
+        @Html.HiddenFor(model => model.ItemId, htmlAttributes: new { @id = "ItemId" })
+
+        @Html.HiddenFor(model => model.RMID, htmlAttributes: new { @id = "RMID" })
+
+
+        <td>
+            @Html.DropDownListFor(model => model.ItemId, Loader.CommonDropdownService.DropDownService.ItemMasterDD(), "--Select Item--", new { @class = "form-control select2 ", @style = "width:150px", @id = "ItemSelect" })
+            @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+        </td>
+
+        <td>
+            @Html.DropDownListFor(model => model.UnitOfMeasureId, Loader.CommonDropdownService.DropDownService.UnitOfMeasureDD(), "--Select UnitOfMeasure--", new { @class = "form-control select2", @style = "width:150px", @id = "UnitOfMeasureId" })
+            @Html.ValidationMessageFor(model => model.UnitofMeasure, "", new { @class = "text-danger" })
+        </td>
+
+        <td>
+            @Html.DropDownListFor(model => model.PurposeTypeId, Loader.CommonDropdownService.DropDownService.PurposeTypeDD(), "--Select Purpose--", new { @class = "form-control select2", @style = "width:100px", @id = "PurposeTypeId" })
+            @Html.ValidationMessageFor(model => model.PurposeType, "", new { @class = "text-danger" })
+        </td>
+
+        <td>
+            @Html.DropDownListFor(model => model.BusinessUnitId, Loader.CommonDropdownService.DropDownService.BUnitDetailsDD(), "--Select BUnit--", new { @class = "form-control select2", @style = "width:110px", @id = "BusinessUnitId" })
+            @Html.ValidationMessageFor(model => model.BUnitName, "", new { @class = "text-danger" })
+        </td>
+
+        <td>
+            @Html.DropDownListFor(model => model.InvestmentCodeId, Loader.CommonDropdownService.DropDownService.InvestmentCodeDD(), "--Select InvestmentCode--", new { @class = "form-control select2", @style = "width:95px", @id = "InvestmentCodeId" })
+            @Html.ValidationMessageFor(model => model.InvestmentCodeName, "", new { @class = "text-danger" })
+        </td>
+
+        <td>
+            @Html.TextBoxFor(model => model.Balance, new { @class = "form-control", @style = "width:60px", @data_toggle = "tooltip", @title = Model.Balance, @id = "Balance", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.Balance, "", new { @class = "text-danger" })
+        </td>
+
+        <td>
+            @Html.TextBoxFor(model => model.RemQntyToTransfer, new { @class = "form-control RemQnty", @style = "width:60px", @data_toggle = "tooltip", @title = Model.RemQntyToTransfer, @id = "RemQnty", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.RemQntyToTransfer, "", new { @class = "text-danger" })
+        </td>
+
+        <td id="TQntyTd">
+            @Html.TextBoxFor(model => model.TrQnty, "0", new { @class = "form-control", @id = "TrQnty", @style = "width:60px;" })
+            @Html.ValidationMessageFor(model => model.TrQnty, "", new { @class = "text-danger" })
+        </td>
+
+        <td>
+            @Html.TextBoxFor(model => model.StoreRemarks, new { @class = "form-control StoreRemarks", data_val = "false", @id = "Remarks" })
+            @Html.ValidationMessageFor(model => model.StoreRemarks, "", new { @class = "text-danger" })
+        </td>
+        <td>
+
+            @if (Model.ReqQnty == remainingTransfer)
+            {
+                <input type="button" value="Reject" class="btn btn-sm btn-danger" onclick="StoreRejectRequest(@Model.RdId)" />
+            }
+
+        </td>
+
+        @*<td class="EditDetailTransferItemClass">
+                <input type="button" value="Edit" id="BtnEditStoreTransferReqItem" onclick="TransferRemoveReadonly(this)" class="btn btn-sm btn-primary" />
+            </td>*@
+
+            @*<td class="SaveDetailTransferItemClass hidden">
+                <input type="button" value="Save" id="BtnSaveStoreTransferReqItem" class="btn btn-sm btn-success" />
+            </td>*@
+
+    }
+</tr>
+    }
+}
+
+
+<script>
+
+    //function TransferRemoveReadonly(control) {
+    //    var row = $(control).closest("tr");
+    //     row.find('.select2').prop('disabled', false);
+    //     row.find(".EditDetailTransferItemClass").addClass('hidden');
+    //     row.find(".SaveDetailTransferItemClass").removeClass('hidden');
+    //}
+
+
+    $(document).ready(function () {
+        $(document).on('click', "#BtnStoreTransferSubmit", function (e) {
+             e.stopImmediatePropagation();
+            debugger;
+
+             var errorCount = 0;
+             var ValMsgCount = 0;
+             var IsTransferValid = false;
+             var RMID = $("#RMID").val();
+             var RdId = $("#RdId").val();
+             var UnitOfMeasureId = $("#UnitOfMeasureId").val();
+             var PurposeTypeId = $("#PurposeTypeId").val();
+             var BusinessUnitId = $("#BusinessUnitId").val();
+             var InvestmentCodeId = $("#InvestmentCodeId").val();
+             var TrQnty = $("#TrQnty").val();
+             var Remarks = $("#Remarks").val();
+             var ReqQnty = $("#TQnty").val();
+             var SerialNo = currentTr.closest("tr").find("#SerialNo").val();
+             var MacNo = currentTr.closest("tr").find("#MacNo").val();
+             var StoreRemarks = $("#StoreRemarks").val();
+
+             if (ReqQnty != 0) {
+                 IsTransferValid = true;
+             }
+
+             if (IsTransferValid) {
+                 $.ajax({
+                     type: "POST",
+                     data: JSON.stringify({
+                         RMID: RMID,
+                         RdId: RdId,
+                         UnitOfMeasureId: UnitOfMeasureId,
+                         PurposeTypeId: PurposeTypeId,
+                         BusinessUnitId: BusinessUnitId,
+                         InvestmentCodeId: InvestmentCodeId,
+                         TrQnty: TrQnty,
+                         Remarks: Remarks,
+                         ReqQnty: ReqQnty,
+                         SerialNo: SerialNo,
+                         MacNo: MacNo,
+                         StoreRemarks: StoreRemarks
+                     }),
+                     url: "/Transfer/StoreTransfer",
+                     contentType: "application/json, charset=utf-8",
+                     dataType: "json",
+
+                     success: function (response) {
+                         debugger
+                         window.location.href = "/Transfer/Storetransfer"
+                         SuccessAlert("Items Transfered Successfully!", 30000)
+                         fetch('@Url.Action("DownloadInvoice", "Transfer")' + '?fName=' + response.fName)
+                         .then(response => response.blob())
+                             .then(blob => {
+                                 const url = URL.createObjectURL(blob);
+                                 const a = document.createElement('a');
+                                 a.href = url;
+                                 a.download = response.fName;
+                                 document.body.appendChild(a);
+                                 a.click();
+                                 a.remove();
+                                 URL.revokeObjectURL(url);
+                             });
+                     },
+
+                     error: function (jqXHR, textStatus, errorThrown) {
+                         //console.error("Error in transfer: ", textStatus, errorThrown)
+                     }
+                 });
+             } else {
+                 $('.ItemMsg').text("Please fill in all required fields.");
+                 $('.ItemOverflow').modal('show');
+                 errorCount++;
+             }
+         });
+    });
+
+
+    function StoreRejectRequest(RdId) {
+        debugger;
+        $.MessageBox({
+            buttonDone: 'Yes',
+            buttonFail: 'No',
+            message: 'Are you sure you want to reject?'
+        }).done(function () {
+            $.get("/Transfer/StoreRejectRequest/", { RdId: RdId }, function (data) {
+                $("section.content").html("");
+                $("section.content").empty();
+                $("section.content").innerHtml = "";
+                $("section.content").html(data);
+                $("section.content").removeData('validator');
+                $("section.content").removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse("section.content");
+            })
+        })
+    }
+
+    $(document).on("change", "#TrQnty", function (e) {
+        e.stopImmediatePropagation();
+        currentTr = $(this).closest('tr');
+        var TQuantity = parseInt($(this).val());
+        var RemQnty = parseInt($(this).closest("tr").find("#RemQnty").val());
+        var ReqDetailId = $(this).closest("tr").find("#ReqDetailId").val();
+        var ItemName = $(this).closest("tr").find("#ItemSelect option:selected").text();
+
+        if (TQuantity >= 0) {
+            //$(this).closest("tr").find(".StoreRemarksValdn").removeClass("hidden");
+            if (TQuantity == 0) {
+                $(this).closest("tr").find('#StoreRemarks').val("");
+                $(this).closest("tr").find('#StoreRemarks').rules('add', {
+                    required: false  // set a new rule
+                });
+                $(this).closest("tr").find('#StoreRemarks').next("span").find("span").remove();
+                var tableCount = $(this).closest('tr').next().has("table").length;
+                if (tableCount != 0) {
+                    $(this).closest('tr').next().remove();
+                }
+            }
+            if (TQuantity <= RemQnty) {
+                $('.ItemDetailMsg').text("Is serial or Mac Numbers required?");
+                $('.ItemDetailConfirm').modal('show');
+                $(".hiddenRDId").val(ReqDetailId);
+                $(".hiddenTRId").val(TQuantity);
+                $(".hiddenItemName").val(ItemName);
+            }
+        }
+        if (TQuantity > RemQnty) {
+            $('.ItemMsg').text("Transfer Quantity Can't be greater then Remainging Transfer Quantity.");
+            $('.ItemOverflow').modal('show');
+            $(this).val(0);
+            var abc = currentTr.next().has("table").length;
+            if (abc != 0) {
+                currentTr.next().remove();
+            }
+            $(this).closest("tr").find('#StoreRemarks').rules('add', {
+                required: false // set a new rule
+            });
+            $(this).closest("tr").find('#StoreRemarks').next("span").find("span").remove();
+        }
+    });
+
+    $(document).on("click", "#DetailsBtnNo", function () {
+        var abc = currentTr.next().has("table").length;
+        if (abc != 0) {
+            currentTr.next().remove();
+        }
+    });
+
+    $(document).on("click", "#DetailBtnYes", function () {
+        debugger;
+        var numberOfRows = currentTr.find("#TrQnty").val();
+        var ItemId = currentTr.find("#ItemId").val();
+        if (!ItemId) {
+            ErrorAlert("Please Select Item First", 1000);
+            return false;
+        }
+        var url = "/Transfer/GetItemDetailView";
+        var data = { numberOfRows: numberOfRows, ItemId: ItemId };
+        $.get(url, data, function (data) {
+            debugger;
+            var abc = currentTr.next().has("table").length;
+            if (abc != 0) {
+                currentTr.next().remove();
+            }
+            currentTr.after(data);
+        });
+    });
+
+</script>
+

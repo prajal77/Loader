@@ -1,0 +1,138 @@
+﻿
+@model Loader.ViewModel.Grade.ClassSetupVM
+@{ 
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Loader.Service.MasterSetupService Class = new Loader.Service.MasterSetupService();
+    var examType = Class.GetExamTerm();
+
+}
+
+<div class="container">
+    <div>
+        <div style="box-shadow:10px; width:400px; height:200px;">
+            <div style="display:flex; flex-direction: column">
+               @* @Html.HiddenFor(model => model.CGsId, new { htmlAttributes = new { @class = "form form-control col-md-4", id = "cgsid" } })*@
+                <input type="hidden" value="@Model.CGsId" id="cgsid"/>
+            </div>
+            <div style="display:flex; flex-direction: column">
+                <label>Grade Name</label>
+                @Html.DropDownListFor(x => x.GradeId, new SelectList(ViewBag.GradeLists, "Mgid", "GradeName"), "--Select Grade--", new { @class = "form-control col-md-4", @id = "Gradeid", @style = "height:40px; width:300px;font-size:18px;" })
+                @*@Html.EditorFor(model => model.GradeId, new { htmlAttributes = new { @class = "form form-control col-md-4", id = "GradeId" } })*@
+            </div>
+            <div style="display:flex; flex-direction: column">
+                <label>Section Name</label>
+                @Html.DropDownListFor(x => x.SectionId, new SelectList(Enumerable.Empty<SelectListItem>(), "SectionId", "SectionName"), "--Select Section--", new { @class = "form-control col-md-4", @id = "Secid", @style = "height:40px; width:300px;font-size:18px;" })
+            </div>
+            @if (Model.CGsId != 0)
+            {
+                <div style="display:flex; flex-direction: column">
+                    <label>Status</label>
+                    <select id="StatusId" style="width:300px; height:40px">
+                        <option value="">--Select Status--</option>
+                        <option value="1" @(Model.StatusId == 1 ? "selected":"")>Active</option>
+                        <option value="0" @(Model.StatusId == 0 ? "selected":"" )>Deactivate</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
+                </div>
+            }
+            <div style="display:flex; flex-direction: column">
+                <label>Exam Terms</label>
+                <select id="ExamType" , class="form-control" style="width:300px; height:40px">
+                    <option disabled selected>--Select Type--</option>
+                    @foreach (var item in examType)
+                    {
+                        <option value="@item.ETermId"@(Model.ETermId == item.ETermId ? "selected" : "" )>
+                            @item.TermName
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div style="margin-top:10px">
+                <button class="btn  btn-info" id="UpsertClass">
+                    @(Model.CGsId==0 ? "Create" : "Update")
+                </button>
+                @Html.ActionLink("Back To List", "GradeExam", "Master", htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        var gradeid = $('#Gradeid').val();
+
+        var selectedsectionid = parseInt('@Model.SectionId');
+        $.ajax({
+            type: 'GET',
+            url: "/Master/GetSectionDropList",
+            data: { id: gradeid },
+            dataType: 'json',
+            success: function (sectionlist) {
+                debugger;
+                var sectionselect = $('#Secid');
+                sectionselect.empty();
+                $.each(sectionlist, function (index, section) {
+                    var option = $('<option>', {
+                        value: section.SectionId,
+                        text: section.SectionName
+                    });
+                    if (section.SectionId === selectedsectionid) {
+                        option.prop('selected', true);
+                    }
+                    sectionselect.append(option);
+                })
+            }
+        })
+        $("#Gradeid").change(function (e) {
+            e.stopImmediatePropagation();
+            debugger;
+            var gradeid = $(this).val();
+            var selecteedsectionid = parseInt('@Model.SectionId');
+            $.ajax({
+                type: 'GET',
+                url: "/Master/GetSectionDropList",
+                data: { id: gradeid },
+                dataType: 'json',
+                success: function (sectionlist) {
+                    var sectionselect = $('#Secid');
+                    sectionselect.empty();
+                    $.each(sectionlist, function (index, section) {
+                        sectionselect.append($('<option/>', {
+                            value: section.SectionId,
+                            text: section.SectionName
+                        }));
+                    });
+                }
+            });
+        })
+        $("#UpsertClass").click(function (e) {
+            e.stopImmediatePropagation();
+            debugger;
+            const cgsid = $("#cgsid").val();
+            const GradeId = $("#Gradeid").val();
+            const StatusId = $("#StatusId").val();
+            const Secid = $("#Secid").val();
+            const ExamType = $("#ExamType").val();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AddClass","Master")',
+                data: {
+                    CGsId: cgsid,
+                    GradeId: GradeId,
+                    SectionId: Secid,
+                    StatusId: StatusId,
+                    ETermId: ExamType
+                },
+                success: function (response) {
+                    window.location.href = "/Master/GradeExam";
+                    SuccessAlert("Success", 30000);
+                }
+    })
+})
+    })
+
+
+
+</script>

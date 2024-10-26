@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Loader.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Users List";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+}
+
+<h2> @ViewBag.Title </h2>
+<div class="box box-body">
+    <table class="container table table-bordered table-striped">
+        <thead>
+            <tr class="row">
+                <th>User Name</th>
+                <th>Email</th>
+                <th>IsActive</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var list in Model)
+            {
+                <tr class="row">
+                    <td>@list.UserName</td>
+                    <td>@list.Email</td>
+                    <td>@list.IsActive</td>
+                    <td>
+                        <a href="/Users/_userPasswordReset?userId=@list.Id">Reset Password</a>
+                    </td>
+                </tr>
+            }
+
+
+
+        </tbody>
+
+    </table>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

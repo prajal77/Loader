@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Loader.EntityDataModel.FgetPendinStoreTransfer_Result>
+
+@{
+    ViewBag.Title = "Store Transfer";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box box-success">
+    <div class="box-header with-border">
+        <h3 class="box-title" style="font:bold">@ViewBag.Title</h3>
+    </div>
+
+    <div class="box-body">
+        @Html.Partial("_ListViewMain", Model)
+    </div>
+</div>
+
+
+
+

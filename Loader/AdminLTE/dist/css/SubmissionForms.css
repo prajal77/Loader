@@ -1,0 +1,188 @@
+﻿.box-container {
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 25px auto;
+    max-width: 1000px;
+}
+
+.details-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 20px; /* Add margin bottom for separation */
+}
+
+.details-column {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.detail-item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.detail-label {
+    font-weight: bold;
+    width: 150px;
+}
+
+.detail-value input {
+    width: calc(100% - 160px);
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.labels-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px; /* Add margin bottom for separation */
+}
+
+    .labels-row label {
+        flex: 2;
+        min-width: 100px;
+        text-align: left;
+    }
+
+.separator {
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.request-item-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.fields-row {
+    display: flex;
+    gap: 0;
+}
+
+    .fields-row .input-group {
+        display: flex;
+        gap: 0;
+        width: 100%;
+    }
+
+    .fields-row input {
+        flex: 1;
+        height: 80%;
+    }
+
+.remove-button, .edit-button, .save-button {
+    border: none;
+    font-size: 10px;
+    cursor: pointer;
+    color: white;
+    height: 80%;
+}
+
+.input-group {
+    position: relative;
+}
+
+.dropdown-container {
+    position: absolute; /* Position it absolutely */
+    background-color: white; /* Ensure the background is white */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Add some border-radius */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    z-index: 1000; /* Ensure it's on top */
+    width: calc(100% - 20px); /* Match the width of the input field */
+    top: calc(100% + 2px); /* Position it below the input field */
+    max-height: 200px; /* Optional: Add max height for scrollable dropdown */
+    overflow-y: auto; /* Optional: Add scroll for overflow */
+    display: none; /* Initially hidden */
+}
+
+.dropdown-item {
+    padding: 10px; /* Adjust padding */
+    cursor: pointer;
+    display: block;
+    white-space: nowrap;
+}
+
+    .dropdown-item:hover {
+        background-color: #f0f0f0;
+    }
+
+.approval-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+    .approval-buttons .btn {
+        margin-left: 5px;
+    }
+
+h2 {
+    background-color: #234b80;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.5em;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
+
+.popup-container {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 200px; /* Adjust width as needed */
+    display: none;
+    z-index: 1000;
+    right: auto; /* Ensure it doesn't stretch beyond the right side */
+}
+
+.popup-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+    top: -10px; /* Position the arrow above the popup */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+    .popup-content label {
+        font-weight: bold;
+    }
+
+    .popup-content textarea {
+        width: 100%;
+        height: 100px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        resize: none;
+    }
+
+    .popup-content .btn {
+        align-self: flex-end;
+    }

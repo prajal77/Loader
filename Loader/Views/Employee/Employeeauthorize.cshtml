@@ -1,0 +1,83 @@
+﻿@model  List<Loader.ViewModel.Metadata.FgetStaffAuthorization_ResultMetaData>
+
+@{
+    var title = "Employee Authorization List";
+    Layout = null;
+    var Sno =0;
+}
+
+<h3>@title</h3>
+
+<div class="box box-body">
+    
+    <div style="float:right; margin-bottom:10px">
+        <a href="/Employee/CreateEmployeeAuthorization" class="btn btn-success">Create New</a>
+    </div>
+
+    <table class="container table table-bordered table-striped">
+        <thead>
+            <tr class="row">
+                <th>Employee Name</th>
+                <th>Level Name</th>
+                <th>Branch Name</th>
+                <th>Branch Code</th>
+                <th>Supervisor Name</th>
+                <th>Location Name</th>
+                <th>Status</th>
+                <th>Type Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @Html.HiddenFor(model => item.Said, new { @id = "Said" })
+                    <td>
+                        @(Sno += 1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LvlName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BranchName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BranchCode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SupervisorName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LocationName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TypeName)
+                    </td>
+
+                    <td style="display:flex; align-items:center; justify-content:center">
+                        <a href="/Employee/EmployeeAuthorization?Said=@item.Said">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+
+             }
+               
+            </tbody>
+    </table>
+</div>

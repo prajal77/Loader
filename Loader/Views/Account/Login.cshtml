@@ -1,0 +1,334 @@
+﻿@using Loader.Models
+@using BotDetect.Web.Mvc
+@using CaptchaMvc.HtmlHelpers
+
+@model LoginViewModel
+@{
+    Layout = null;
+
+}
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<link href="~/Content/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/assets/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+<script src="~/Scripts/ch-dialog.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/ch-dpicker.js"></script>
+<link href="~/Content/ch-dialog.css" rel="stylesheet" />
+<link href="~/Content/messagebox.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function () {
+        $("a[title ~= 'BotDetect']").removeAttr("style");
+        $("a[title ~= 'BotDetect']").removeAttr("href");
+        $("a[title ~= 'BotDetect']").css('visibility', 'hidden');
+
+    });
+</script>
+
+<div class="main-card">
+    <div class="card login-card">
+        <div class="circle-div">
+            <span class="circle1"></span>
+            <span class="circle2"></span>
+        </div>
+        <h2><span style="color: #F38218; padding-right: 5px; font-size:24px">Inventory</span> Management System</h2>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            var message = Html.ValidationMessage("Error");
+            if (message.Equals(""))
+            {
+                <div class="err-msg" style="display: flex; align-items: center; justify-content: center">
+                    <div class="text-center alert alert-danger" style="width:400px;">
+                        @Html.ValidationMessage("Error")
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <div class="err-msg" style="display: flex; align-items: center; justify-content: center">
+                    <div class="text-center alert alert-danger" style="width:400px;">
+                        @Html.ValidationMessage("Error")
+                    </div>
+
+                </div>
+            }
+        }
+        <!-- Begin # DIV Form id="div-forms"-->
+    <div class="login-container">
+
+        <!-- Begin # Login Form -->
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @id = "login-form" }))
+        {
+            @Html.AntiForgeryToken();
+             <div style="display:flex; flex-direction:column; margin-right:10px">
+                <div style="display:flex; flex-direction: column; margin-bottom:10px">
+                    <label style="margin-bottom: 5px;">Email</label>
+                     @Html.TextBoxFor(x => x.Email, new { @class = "login-input", @autocomplete = "off", @placeholder = "Enter Your Email", @style = "margin-bottom:5px;", @id = "email" })
+                 </div>
+
+                  <div style="display:flex; flex-direction: column">
+                    <label style="margin-bottom:5px;">Password</label>
+                     @Html.TextBoxFor(x => x.Password, new { @class = "login-input", type="password", @placeholder = "Enter Password", @id = "password" })
+                        <i class="fa-solid fa-eye"></i>
+                  </div>
+
+             </div>
+
+             <div style="color:gray;">
+                <span>
+                    @Html.Captcha("Refresh", "Enter Captcha:", 5, "The Captcha is required.", true)
+                 </span>
+                 <span class="text-danger">
+                    @ViewBag.ErrorMessage
+                 </span>
+             </div>
+
+            <div style="display:flex; flex-direction: row; width:300px; align-items:center;">
+                <label>
+                    @Html.CheckBoxFor(x => x.RememberMe)
+                </label>
+                <h5 style="font-size:12px; margin-left:3px;">Remember me</h5>
+            </div>
+
+            <button type="submit" class="btnLogin">Login</button>
+
+            <div style="width:300px; margin-top:10px;">
+                <a href="#" style="color: white; font-size:12px;">Forget Password</a>
+            </div>
+
+        }
+        <!-- End # Login Form -->
+        <!-- Begin | Lost Password Form -->
+        <!-- Begin | Register Form -->
+        <!-- Begin | Lost Password Form -->
+        @using (Html.BeginForm("ForgotPassword", "Account", FormMethod.Post, new { @id = "forgotpw", @style = "display:none;" }))
+        {
+            <form id="lost-form">
+
+                @Html.AntiForgeryToken();
+                <div class="modal-body">
+                    <div id="div-lost-msg">
+                        <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
+                        <span id="text-lost-msg">Type your e-mail.</span>
+                    </div>
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email", @autocomplete = "off" })
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block submit-fwpwd">Send</button>
+                    </div>
+                    <div>
+                        <button id="lost_login_btn" type="button" class="btn btn-link">Log In</button>
+                    </div>
+                </div>
+
+            </form>
+        }
+
+        <!-- End | Register Form -->
+    </div>
+        <!-- End # DIV Form -->
+
+    </div>
+</div>
+<!-- END # MODAL LOGIN -->
+
+<style>
+    body {
+        border: none;
+        margin: 0;
+        padding: 0;
+        background-color: #304766;
+        color: white;
+    }
+
+    .main-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 60px;
+    }
+
+    .login-card {
+        width: 858px;
+        height: 525px;
+        background-color: #304766;
+        border: 1px solid #3B577D;
+        border-radius: 4px;
+        box-shadow: 0px 14px 24px 4px rgba(16, 24, 35, 0.45);
+        overflow: hidden;
+    }
+
+    .circle-div {
+        display: flex;
+        align-items: flex-start;
+        margin-top: -40px;
+    }
+
+    .circle1 {
+        width: 150px;
+        height: 150px;
+        background-color: #F38218;
+        border-radius: 50%;
+        display: flex;
+        margin-left: -30px;
+    }
+
+    .circle2 {
+        width: 150px;
+        height: 150px;
+        background-color: #00244C;
+        opacity: 0.6;
+        border-radius: 50%;
+        display: flex;
+        margin-left: -90px;
+        margin-top: -13px;
+    }
+
+    h2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: -50px;
+        font: bold;
+    }
+
+    .login-container{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btnLogin {
+        width: 300px;
+        height: 35px;
+        border: none;
+        background-color: #F38218;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 6px;
+    }
+
+    .btnLogin:hover {
+        background-color: #ff6a03;
+    }
+
+    .login-input {
+        width: 300px;
+        height: 35px;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        padding-left: 10px;
+        font-size: 16px;
+        color: black;
+    }
+</style>
+
+
+<script type="text/javascript">
+
+    setTimeout(function () {
+        $(".err-msg").fadeOut();
+    }, 2000)
+
+    $("#login-form").submit(function () {
+        debugger;
+
+        var form = $(this);
+        form.validate();
+        if (form.valid() == false) {
+            InfoAlert("The Required Feild is Empty");
+            return false;
+        }
+
+        //var container = $(this).closest('.panel-create');
+        var formData = new FormData($(this)[0]);
+        //var nodeId = $(this).find('.section-treeview#PMenuId').find('.internal-value').val()
+
+
+            $.ajax({
+                url: '@Url.Action("Login", "Account")',
+                type: 'POST',
+                data: formData,
+                async: true,
+                success: function (data) {
+                    if (formData.Email == data.Email && formData.PasswordHash == data.PasswordHash) {
+                        SuccessAlert("Login Sucessful");
+                    }
+                },
+                error: function (data) {
+                    debugger;
+                    ErrorAlert(data.responseText, 15000)
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+
+
+
+    });
+
+
+
+    $(".submit-fwpwd").click(function () {
+        debugger;
+        var elementId = document.getElementById('forgotpw');
+        document.getElementById('forgotpw').submit();
+    });
+</script>
+
+
+<script>
+
+    $(function () {
+
+        var $formLogin = $('form#login-form');
+        var $formLost = $('form#lost-form');
+        var $forgtpw = $('form#forgotpw')
+        var $formRegister = $('#register-form');
+        var $divForms = $('#div-forms');
+        var $modalAnimateTime = 300;
+        var $msgAnimateTime = 150;
+        var $msgShowTime = 2000;
+
+
+
+        $('#login_register_btn').click(function () {
+            modalAnimate($formLogin, $forgtpw)
+        });
+        $('#register_login_btn').click(function () { modalAnimate($formRegister, $formLogin); });
+        $('#login_lost_btn').click(function () {
+            //$('form#login-form').hide();
+            //$('form#forgotpw').show();
+            modalAnimate($formLogin, $forgtpw);
+        });
+        $('#lost_login_btn').click(function () {
+
+            modalAnimate($forgtpw, $formLogin);
+        });
+        $('#lost_register_btn').click(function () { modalAnimate($formLost, $formRegister); });
+        $('#register_lost_btn').click(function () { modalAnimate($formRegister, $formLost); });
+
+        function modalAnimate($oldForm, $newForm) {
+            var $oldH = $oldForm.height();
+            var $newH = $newForm.height();
+            $divForms.css("height", $oldH);
+            $oldForm.fadeToggle($modalAnimateTime, function () {
+                $divForms.animate({ height: $newH }, $modalAnimateTime, function () {
+                    $newForm.fadeToggle($modalAnimateTime);
+                });
+            });
+        }
+    });
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

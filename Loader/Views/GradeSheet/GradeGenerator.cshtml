@@ -1,0 +1,549 @@
+﻿@model List<Loader.ViewModel.GenerateGradeSheet.GradeSheetSetupVM>
+@{
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Loader.Service.GradeSheetService Class = new Loader.Service.GradeSheetService();
+    var YearList = Class.GetYearLists();
+    var examType = Class.GetExamTerm();
+}
+<style>
+    .filter-nav {
+        background-color: white;
+        padding: 15px 0;
+        margin: -30px -15px 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .filter-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    .filter-selects {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Uniform styles for all dropdowns */
+    .filter-select,
+    .select2-container .select2-selection--single {
+        height: 41px;
+        width: 200px;
+        padding: 10px 30px 10px 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        font-weight: 500;
+        border: 1px solid #B6B7BC;
+        border-radius: 4px;
+        background-color: white;
+        /*        margin-right: 10px;
+    */ appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        cursor: pointer;
+    }
+
+    /* Select2 specific styles */
+    .select2-container .select2-selection--single {
+        height: 41px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        display: none; /* Hide default Select2 arrow */
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 41px !important;
+        padding-right: 20px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__placeholder {
+        line-height: 41px;
+    }
+
+    /* Button styles */
+    .filter-btn {
+        background-color: #304766;
+        color: white;
+        padding: 10px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        height: 41px;
+    }
+
+        .filter-btn.bg-red {
+            background-color: #dc3545;
+        }
+
+    table.centered-table {
+        width: 100%;
+        border: 1px solid black; /* Black border */
+        text-align: center; /* Center align text */
+        padding-top: 100px;
+        color: #304766;
+    }
+
+
+    table.low-table {
+        width: 100%;
+        margin-top: 0px;
+        border: 1px solid black; /* Black border */
+        text-align: center; /* Center align text */
+        padding-top: 1px
+    }
+
+    .table-container {
+        font-family: Arial, sans-serif;
+        margin-top: 20px;
+    }
+
+    .table-style {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        color: #304766;
+    }
+
+    .table-cell {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .table-header {
+        background-color: #304766;
+        color: white;
+        font-weight: bold;
+    }
+
+    .filter-pdf {
+        margin-top: 20px;
+        background-color: #304766;
+        color: white;
+        padding: 10px 12px;
+        font-size: 14px;
+        line-height: 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        height: 41px;
+        font-weight: bold;
+    }
+
+    col-subject-code {
+        width: 10%;
+    }
+
+    .col-subjects {
+        width: 30%;
+    }
+
+    .col-credit-hour {
+        width: 10%;
+    }
+
+    .col-grade-point {
+        width: 10%;
+    }
+
+    .col-grade {
+        width: 10%;
+    }
+
+    .col-final-grade {
+        width: 15%;
+    }
+
+    .col-gpa {
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    /* FINAL GRADE */
+    .col-remarks {
+        width: 15%;
+    }
+
+    .table-loading {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 1000;
+        text-align: center;
+    }
+
+    .table-loading-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .table-loading i {
+        font-size: 30px;
+        color: #304766;
+    }
+
+    .table-loading-text {
+        margin-top: 10px;
+        color: #304766;
+        font-weight: bold;
+    }
+
+    .table-container {
+        position: relative;
+        min-height: 200px; /* Adjust based on your needs */
+    }
+</style>
+<div class="body-content">
+    <div class="filter-nav">
+        <div class="container">
+            <div class="filter-container">
+                <div class="filter-selects">
+
+                    <select id="fiscalyear" class="filter-select">
+                        <option disabled selected>Fiscal Year</option>
+                        @foreach (var item in YearList)
+                        {
+                            <option value="@item.FiscalYear">@item.NYear</option>
+                        }
+                    </select>
+                    <div>
+                        @Html.DropDownList("GradeId", new SelectList(ViewBag.GetGrade, "Mgid", "GradeName"), "Select Grade", new { @class = "filter-select", @id = "Gradeid" })
+                    </div>
+
+
+                    <div>
+                        @Html.DropDownList("sectionId", new SelectList(Enumerable.Empty<SelectListItem>(), "sectionId", "SectionName"), "Select Section", new { @class = "filter-select", @id = "Secid" })
+                    </div>
+
+                    <select id="examTerm" class="filter-select">
+                        <option>Select Term</option>
+                        @foreach (var item in examType)
+                        {
+                            <option value="@item.ETermId">
+                                @item.TermName
+                            </option>
+                        }
+                    </select>
+                    <div>
+                        @Html.DropDownList("StudentId", new SelectList(Enumerable.Empty<SelectListItem>(), "StudentId", "StudentName"), "Select Student", new { @class = "filter-select", @id = "StudentId" })
+                    </div>
+
+                    <button class="filter-btn" onclick="updateGradeSheet()">Load</button>
+                    <button class="filter-btn bg-red" id="clear">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="centered-table">
+        @foreach (var item in ViewBag.GetCompanyDetails)
+        {
+            <tr>
+                <td style="text-align:center " colspan="2">
+                    <h2>
+                        @item.CompanyName
+                    </h2>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center" colspan="2">
+                    @item.CompanyAddress
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; padding-top:5px" colspan="2">
+                    ESTD: @item.Estd
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center; padding-top: 5px; padding-bottom:5px; font-size:10px " colspan="2">
+                    <strong>GRADE-SHEET</strong>
+                </td>
+            </tr>
+        }
+    </table>
+    <table class="low-table" id="studentInfo">
+        <tr>
+            <td>Symbole No.: @(Model != null && Model.Any() ? Model.First().RollNo : "N/A")</td>
+            <td>Student Name: @(Model != null && Model.Any() ? Model.First().StudentName : "N/A")</td>
+            <td>Year(BS): @(Model != null && Model.Any() ? Model.First().YearBS.ToString(): "N/A")</td>
+            <td>Faculty Name: @(Model != null && Model.Any() ? Model.First().FacultyGroupName : "N/A")</td>
+
+        </tr>
+
+    </table>
+
+    <div class="table-container" id="displayHeader" style="display:none;">
+        <div class="loading-overlay">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <div class="loading-text">Loading...</div>
+            </div>
+        </div>
+
+        <table class="table-style">
+            <thead>
+                <tr>
+                    <th class="table-cell table-header col-subject-code">SUBJECT CODE</th>
+                    <th class="table-cell table-header col-subjects">SUBJECTS</th>
+                    <th class="table-cell table-header col-credit-hour">CREDIT HOUR</th>
+                    <th class="table-cell table-header col-grade-point">GRADE POINT</th>
+                    <th class="table-cell table-header col-grade">GRADE</th>
+                    <th class="table-cell table-header col-final-grade">FINAL GRADE</th>
+                    <th class="table-cell table-header col-remarks">REMARKS</th>
+                </tr>
+            </thead>
+            <tbody id="gradeData">
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="table-cell col-subject-code">@item.SubjectCode</td>
+                            <td class="table-cell col-subjects">@item.Subjects</td>
+                            <td class="table-cell col-credit-hour">@item.CreditHour</td>
+                            <td class="table-cell col-grade-point">@item.GradePoint</td>
+                            <td class="table-cell col-grade">@item.Grade</td>
+                            <td class="table-cell col-final-grade">@item.FinalGrade</td>
+                            <td class="table-cell col-final-grade"></td>
+
+                        </tr>
+
+                    }
+                    <tr>
+                        <td class="table-cell col-gpa" colspan="7">Grade Point Average (GPA) = @Model.First().GPA</td>
+                    </tr>
+                }
+            </tbody>
+
+
+        </table>
+        <button class="filter-pdf bg-red" onclick="RequestExportPDF()"> Export PDF </button>
+    </div>
+
+</div>
+<div class="loading-overlay">
+    <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <div class="loading-text">Loading...</div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/select2")
+@Styles.Render("~/Content/select2")
+<script>
+    $(document).ready(function () {
+
+        // Ensure loading overlay is hidden initially
+        $(".loading-overlay").hide();
+
+
+        // Initialize Select2 for all dropdowns
+        $("#fiscalyear, #Gradeid, #Secid, #examTerm, #StudentId").select2({
+            minimumResultsForSearch: 6, // Show search box only if there are 6 or more options
+            width: '200px'
+
+        });
+
+
+
+        $("#Gradeid").change(function () {
+            resetDropdown("#Secid", "Select Section");
+            resetDropdown("#StudentId", "Select Student");
+
+            if ($(this).val()) {
+                loadSectionData();
+            }
+        });
+
+
+        $("#Secid").change(function () {
+            resetDropdown("#StudentId", "Select Student");
+
+            if ($(this).val()) {
+                loadStudentData();
+            }
+        });
+
+
+
+        function resetDropdown(selector, placeholder) {
+            $(selector).empty().append($('<option>', {
+                value: '',
+                text: placeholder
+            })).trigger('change');
+        }
+
+        function loadSectionData() {
+            debugger;
+            var gradeid = $("#Gradeid").val();
+            if (gradeid) {
+                $.ajax({
+                    type: 'GET',
+                    url: "/GradeSheet/GetSectionDropList",
+                    data: { id: gradeid },
+                    dataType: 'json',
+                    success: function (sectionlist) {
+                        var sectionselect = $('#Secid');
+                        sectionselect.empty().append($('<option>', {
+                            value: '',
+                            text: 'Select Section'
+                        }));
+                        $.each(sectionlist, function (index, section) {
+                            sectionselect.append($('<option>', {
+                                value: section.sectionId,
+                                text: section.SectionName
+                            }));
+                        });
+                        sectionselect.trigger('change');
+                    }
+                });
+            }
+        }
+
+        function loadStudentData() {
+            debugger;
+            var secId = $("#Secid").val();
+            console.log(secId);
+            if (secId) {
+                $.ajax({
+                    type: 'GET',
+                    url: "/GradeSheet/GetStudentDropList",
+                    data: { id: secId },
+                    dataType: 'json',
+                    success: function (studentList) {
+                        var studentselect = $('#StudentId');
+                        studentselect.empty().append($('<option>', {
+                            value: '',
+                            text: 'Select Student'
+                        }));
+                        $.each(studentList, function (index, student) {
+                            studentselect.append($('<option>', {
+                                value: student.StudentId,
+                                text: student.StudentName
+                            }));
+                        });
+                        studentselect.trigger('change');
+                    }
+                });
+            }
+        }
+
+
+        // Clear button functionality
+        $("#clear").click(function () {
+            $(".filter-select").val().trigger('change');
+
+        });
+
+
+
+    });
+
+    function updateGradeSheet() {
+        debugger;
+        var fiscalYear = $("#fiscalyear").val();
+        var gradeId = $("#Gradeid").val();
+        var sectionId = $("#Secid").val();
+        var examId = $("#examTerm").val();
+        var studentId = $("#StudentId").val();
+
+        if (!fiscalYear || !gradeId || !sectionId || !examId || !studentId) {
+            alert("Please select all required fields");
+            return;
+        }
+        // Show loading overlay
+        $(".loading-overlay").show();
+
+        $.ajax({
+            type: 'GET',
+            url: "/GradeSheet/GradeGenerator",
+            data: {
+                gradeId: gradeId,
+                sectionId: sectionId,
+                examId: examId,
+                fiscalYear: fiscalYear,
+                studentId: studentId
+            },
+            success: function (data) {
+                // Parse the returned HTML content
+                var parsedHTML = $(data);
+                var newTbody = parsedHTML.find("#gradeData");
+                var studentInfo = parsedHTML.find("#studentInfo");
+
+                if (newTbody.length > 0) {
+                    $("#gradeData").html(newTbody.html());
+                    $("#studentInfo").html(studentInfo.html());
+                    $("#displayHeader").show();
+                    // $("#pdf").show();
+                } else {
+                    $("#gradeData").empty();
+                    $("#studentInfo").find("td").text("N/A");
+                    $("#displayHeader").hide();
+                    // $("#pdf").hide();
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error updating grade sheet:", error);
+                alert("Error loading grade sheet. Please try again.");
+            },
+            complete: function () {
+                // Hide loading overlay regardless of success or failure
+                $(".loading-overlay").hide();
+            }
+        });
+    }
+
+    function RequestExportPDF() {
+        debugger;
+        var fiscalYear = $("#fiscalyear").val();
+        var gradeId = $("#Gradeid").val();
+        var sectionId = $("#Secid").val();
+        var examId = $("#examTerm").val();
+        var studentId = $("#StudentId").val();
+        $.ajax({
+            url: '/GradeSheet/GradePDFGenerator',
+            type: 'GET',
+            data: {
+                gradeId: gradeId,
+                sectionId: sectionId,
+                examId: examId,
+                fiscalYear: fiscalYear,
+                studentId: studentId
+            },
+            xhrFields: {
+                responseType: 'blob' // Important to handle the binary data
+            },
+            success: function (blob) {
+                //Create a link element
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'Grade_Sheet.pdf'; //Set the file name
+                link.click();//Trigger the download
+            },
+            error: function (xhr, status, error) {
+                console.error('Error downloading the file:', error);
+            }
+        });
+    }
+
+</script>

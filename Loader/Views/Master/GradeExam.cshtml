@@ -1,0 +1,56 @@
+﻿
+
+@model List<Loader.ViewModel.Grade.ClassSetupVM>
+
+@{
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+
+    var sn = 0;
+}
+
+
+<div class="container">
+    <div>
+        <h3>Faculty List</h3>
+        <span style="float: right; cursor: pointer; margin-bottom:5px;">
+            @Html.ActionLink("Add New", "AddClass", "Master", htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+        </span>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>SN.</th>
+                <th>Grade Name</th>
+                <th>Section Name</th>
+                <th>Exam Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @(sn+=1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.GradeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.SectionName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ExamName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "AddClass", "Master", new { id = item.CGsId }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+

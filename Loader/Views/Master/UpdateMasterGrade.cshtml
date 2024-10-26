@@ -1,0 +1,74 @@
+﻿@model Loader.ViewModel.Grade.MasterGradeVM
+@{
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+
+    var sn = 0;
+
+    Loader.Service.MasterSetupService grade = new Loader.Service.MasterSetupService();
+    var GradeStatusList = grade.GetStatusList();
+}
+
+<div class="container">
+    <div>
+        <div style="box-shadow:10px; width:400px; height:200px;">
+
+            <div style="display:flex; flex-direction: column">
+
+                @Html.HiddenFor(model => model.Mgid, new { htmlAttributes = new { @class = "form form-control col-md-4", id = "Mgid" } })
+            </div>
+
+            <div style="display:flex; flex-direction: column">
+                <label>Grade Name</label>
+                @Html.EditorFor(model => model.GradeName, new { htmlAttributes = new { @class = "form form-control col-md-4", id = "GradeName" } })
+
+            </div>
+
+            <div style="display:flex; flex-direction: column">
+                <label>Status</label>
+
+                @Html.DropDownListFor(x => x.StatusId, new SelectList(GradeStatusList, "Value", "Text"), "--Select Status--", new { @class = "form-control", @style = "width:300px; height:40px" })
+                @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
+                @*<select id="StatusId" style="width:300px; height:40px">
+                    <option>--Select Status--</option>
+                    <option value="1">Active</option>
+                    <option value="0">Deactive</option>
+                </select>*@
+            </div>
+
+            <div style="margin-top:10px">
+                <button class="btn  btn-info" id="UpdateMasterGrade">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#UpdateMasterGrade").on("click", function (e) {
+            e.stopImmediatePropagation();
+            debugger;
+
+            const GradeId = $("#Mgid").val();
+            const GradeName = $("#GradeName").val();
+            const StatusId = $("#StatusId").val();
+
+            console.log(GradeId, GradeName, StatusId);
+
+
+            $.ajax({
+                type: "POST",
+                url: "/Master/UpdateMasterGrade",
+                data: { Mgid: GradeId, GradeName: GradeName, StatusId: StatusId },
+                success: function (response) {
+                    window.location.href = "/Master/GradeSetup";
+                    SuccessAlert("Grade Updated Successfully!", 30000)
+                }
+            })
+
+        })
+
+    })
+</script>
+
+

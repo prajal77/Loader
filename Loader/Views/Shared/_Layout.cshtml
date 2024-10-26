@@ -1,0 +1,176 @@
+﻿
+<!DOCTYPE html>
+<html>
+@{
+    Loader.Service.LayoutMenuMainService menumainService = new Loader.Service.LayoutMenuMainService();
+
+}}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title - Inventory Management System</title>
+
+    @Styles.Render("~/AdminLTE/css")
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    @*<link href="~/Content/Site.css" rel="stylesheet" />*@
+    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.js"></script>
+    <link href="~/bootstrap/css/bootstrap.min.css" />
+    <link href="~/bootstrap/css/bootstrap.css" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/AdminLTE/plugins/select2/select2.css" />
+
+
+    <script src="~/AdminLTE/plugins/daterangepicker/moment.js"></script>
+    <script src="~/AdminLTE/plugins/select2/select2.js"></script>
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <style>
+        html {
+            font-size: 16px;
+            font-family: 'Abel', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue-light sidebar-mini fixed main-application-body" style="font-family: 'Abel', sans-serif;">
+    @Scripts.Render("~/bundles/jquery")
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/scripts")
+
+    <!---->
+    @*<script src="~/Scripts/jquery-3.7.1.min.js"></script>*@
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+
+    <script src="~/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Scripts/jquery-1.11.1.ui.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+
+    ------------
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">-->
+    <!-- Optional theme -->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">-->
+    <!-- Latest compiled and minified JavaScript -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>-->
+
+
+    @*<style>
+            html {
+                font-size: 14px;
+               font-family: 'Abel', sans-serif;
+            }
+        </style>*@
+
+
+    <div class="wrapper">
+        <!-- Main Header-->
+        @Html.Hidden("UniqueKey", new { @id = "UniqueKey" })
+        <header class="main-header">
+            @Html.Partial("_Layout-Header")
+
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar" style="height: 580px !important; overflow: auto; background-color: #304766; color: white;">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            @Html.Partial("_Layout-Sidebar", menumainService.GetLayoutMenuGroupTree());
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" style="padding-top:50px;font-family: 'Abel', sans-serif;">
+            <!-- Main content -->
+            <section class="content section-content" id="SectionContent">
+                <!-- Your Page Content Here -->
+                @RenderBody()
+
+                @RenderSection("Scripts", required: false)
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <div class="loaderContainer" style="display:none;background:rgba(86, 80, 80, 0.18);position: fixed;top:0;left:0;width: 100vw;height: 100vh;z-index: 99999;">
+            <div class="loader"></div>
+        </div>
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="pull-right hidden-xs">
+                @*Anything you want*@
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2024 <a href="#"> Channakya Software Pvt. Ltd.</a>.</strong> All rights reserved.
+        </footer>
+
+        @Html.Partial("_Layout-Control-Sidebar")
+    </div>
+
+
+</body>
+</html>
+@*<img id="loadingajax" src="~/Images/animatedEllipse.gif"/>*@
+<script>
+    $(document).ready(function () {
+        $(document).bind("ajaxSend", function () {
+            $('.loaderContainer').show().find('.loader').css({ "top": "50%", "left": "50%" });
+        }).bind("ajaxStop", function () {
+            $('.loaderContainer').hide();
+        });
+    });
+</script>
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+       
+            $(window).bind("beforeunload", function () {
+                debugger;
+                //return confirm("You are about to close the window");
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("EndSession", "Account")',
+                    dataType: "html",
+                    success: function (html) {
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            });
+    
+        });
+</script>
+
+
+<style>
+    /*.loader {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        border: 2px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 2px solid #3498db;
+        width: 50px;
+        height: 50px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }*/
+
+    .fa {
+        font-size: initial !important;
+    }
+
+</style>

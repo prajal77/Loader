@@ -1,0 +1,130 @@
+﻿@model List<Loader.ViewModel.GenerateGradeSheet.GradeSheetSetupVM>
+@using System.Linq
+
+@{
+    Layout = null; // PDF views should have no layout
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .main-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .main-table th, .main-table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+    .student-info {
+        margin: 20px 0;
+    }
+
+    .footer {
+        margin-top: 30px;
+    }
+
+    .signatures {
+        margin-top: 50px;
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+</head>
+<body>
+    <table class="header-table">
+        @foreach (var item in ViewBag.GetCompanyDetails)
+        {
+            <tr>
+                <td style="text-align: center;">
+                    <h2>@item.CompanyName</h2>
+                    <p>@item.CompanyAddress</p>
+                    <p>ESTD: @item.Estd</p>
+                    <h3>GRADE-SHEET</h3>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="student-info">
+        <p>Symbol No.: @(Model.FirstOrDefault()?.RollNo ?? null)</p>
+        <p>Student Name: @(Model.FirstOrDefault()?.StudentName ?? "N/A")</p>
+        <p>Year(BS): @(Model.FirstOrDefault()?.YearBS.ToString() ?? "N/A")</p>
+        <p>Faculty Name: @(Model.FirstOrDefault()?.FacultyGroupName ?? "N/A")</p>
+    </div>
+
+    <table class="main-table">
+        <thead>
+            <tr>
+                <th>SUBJECT CODE</th>
+                <th>SUBJECTS</th>
+                <th>CREDIT HOUR</th>
+                <th>GRADE POINT</th>
+                <th>GRADE</th>
+                <th>FINAL GRADE</th>
+                <th>REMARKS</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SubjectCode</td>
+                        <td>@item.Subjects</td>
+                        <td>@item.CreditHour</td>
+                        <td>@item.GradePoint</td>
+                        <td>@item.Grade</td>
+                        <td>@item.FinalGrade</td>
+                        <td></td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="7" style="text-align: center;">
+                        Grade Point Average (GPA) = @Model.First().GPA
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div class="signatures">
+            <div>
+                <p>____________________</p>
+                <p>PREPARED BY</p>
+            </div>
+            <div>
+                <p>____________________</p>
+                <p>CHECKED BY</p>
+            </div>
+            <div>
+                <p>____________________</p>
+                <p>HEAD TEACHER</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <p>NOTE:</p>
+            <p>ONE CREDIT HOUR EQUALS 32 CLOCK HOURS.</p>
+            <p>INTERNAL (IN): THIS COVERS THE PARTICIPATION, PRACTICAL/PROJECT WORKS, COMMUNITY WORKS,</p>
+            <p>INTERNSHIP, PRESENTATIONS, TERMINAL EXAMINATIONS.</p>
+            <p>THEORY (TH): THIS COVERS ANNUAL WRITTEN EXAMINATION.</p>
+            <p>ABS = ABSENT W = WITHHELD</p>
+        </div>
+    </div>
+

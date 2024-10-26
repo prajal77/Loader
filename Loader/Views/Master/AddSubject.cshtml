@@ -1,0 +1,101 @@
+﻿
+@model Loader.ViewModel.Grade.SubjectCreateVM
+
+@{ 
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class="container">
+    <div>
+        <h4 style="color:#304766; font-size:24px">Add Subject</h4>
+        <br />
+    </div>
+
+    <div>
+        <div style="box-shadow:10px; width:400px; height:200px;">
+
+            <div style="display:flex; flex-direction: column">
+                <label>Subject Code</label>
+                @Html.EditorFor(model => model.SubCode, new { htmlAttributes = new { @class = "form form-control col-md-4", @id = "thsubcode", @style = "width:300px; height:40px; font-size:18px" } })
+            </div>
+
+            <div style="display:flex; flex-direction: column">
+                <label>Subject Name</label>
+                @Html.EditorFor(model => model.ThSubjectName, new { htmlAttributes = new { @class = "form form-control col-md-4", @id = "thsubname", @style = "width:300px; height:40px; font-size:18px" } })
+            </div>
+
+            <div style="display:flex; flex-direction: column">
+                <label>Theory FullMarks</label>
+                @Html.EditorFor(model => model.ThFullMarks, new { htmlAttributes = new { @class = "form form-control col-md-4", @id = "thfullmarks", @style = "width:300px; height:40px; font-size:18px" } })
+            </div>
+
+            <div style="display:flex; flex-direction: column">
+                <label>Theory Credit Hour</label>
+                @Html.EditorFor(model => model.ThCreditHR, new { htmlAttributes = new { @class = "form form-control col-md-4", @id = "thcredithr", @style = "width:300px; height:40px; font-size:18px" } })
+            </div>
+
+            <div style="display:flex; flex-direction: column">
+                <label>Internal Subject Name</label>
+                @Html.EditorFor(model => model.INSubjectName, new { htmlAttributes = new { @class = "form form-control col-md-4", @id = "insubjectname", @style = "width:300px; height:40px; font-size:18px" } })
+            </div>
+
+            <div style="display:flex; flex-direction: column">
+                <label>Internal FullMarks</label>
+                @Html.EditorFor(model => model.INFullMarks, new { htmlAttributes = new { @class = "form form-control col-md-4", @id = "infullmarks", @style = "width:300px; height:40px; font-size:18px" } })
+            </div>
+
+            <div style="display:flex; flex-direction: column">
+                <label>Internal Credit Hour</label>
+                @Html.EditorFor(model => model.INCreditHR, new { htmlAttributes = new { @class = "form form-control col-md-4", @id = "incredithr", @style = "width:300px; height:40px; font-size:18px" } })
+            </div>
+
+
+
+            <div style="margin-top:10px">
+
+                <button class="btn  btn-info" id="AddSubject">Submit</button>
+                @Html.ActionLink("Back To List", "SubjectSetup", "Master", htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready()(function () {
+        $("#AddSubject").click(function (e) {
+            e.stopImmediatePropagation();
+            debugger;
+
+            const subjectcode = $("#thsubcode").val();
+            const thsubname = $("#thsubname").val();
+            const thfullmarks = $("#thfullmarks").val();
+            const thcredithr = $("#thcredithr").val();
+            const insubjectname = $("#insubjectname").val();
+            const infullmarks = $("#infullmarks").val();
+            const incredithr = $("#incredithr").val();
+
+            $.ajax({
+                type: 'POST',
+                url:@Url.Action("AddSubject","Master"),
+                data: {
+                    SubCode: subjectcode,
+                    ThSubjectName: thsubname,
+                    ThFullMarks: thfullmarks,
+                    ThCreditHR: thcredithr,
+                    INSubjectName: insubjectname,
+                    INFullmarks: infullmarks,
+                    INCreditHR: incredithr
+
+                },
+                success: function (response) {
+                    window.location.href = "/Master/FacultySetup";
+                    SuccessAlert("Add Grade Successfully!", 30000)
+                }
+            });
+        });
+    });
+</script>

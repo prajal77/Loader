@@ -1,0 +1,1369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ChaInvBillingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="DATEFROMPARTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime">
+          <Parameter Name="year" Type="int" Mode="In" />
+          <Parameter Name="month" Type="int" Mode="In" />
+          <Parameter Name="day" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FGetAdDateFormat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
+        <Function Name="fgetBranchDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="BranchId" Type="int" />
+                <Property Name="BranchName" Type="varchar" MaxLength="500" />
+                <Property Name="BranchCode" Type="varchar" MaxLength="200" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FGetBsDateFormat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
+        <Function Name="FGetBSDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="tinyint">
+          <Parameter Name="NDate" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="FGetBSMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="tinyint">
+          <Parameter Name="NDate" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="FGetBSYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="NDate" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="FGetDateAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="smalldatetime">
+          <Parameter Name="NYear" Type="int" Mode="In" />
+          <Parameter Name="NMonth" Type="int" Mode="In" />
+          <Parameter Name="NDay" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FGetDateADByDateBS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="smalldatetime">
+          <Parameter Name="DateBS" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="FGetDateADOfMonthStartEnd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="date">
+          <Parameter Name="NDate" Type="varchar" Mode="In" />
+          <Parameter Name="IsStart" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="FGetDateBS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="EngDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="FGetDateDifferenceInYearsMonthsDays" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar(max)">
+          <Parameter Name="datefrom" Type="date" Mode="In" />
+          <Parameter Name="dateto" Type="date" Mode="In" />
+        </Function>
+        <Function Name="FGetDateType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
+        <Function Name="FGetDaysInMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="Month" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FGetDaysInMonthAD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="year" Type="int" Mode="In" />
+          <Parameter Name="month" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FgetEmployeeInfoTB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="UserId" Type="int" />
+                <Property Name="EmployeeId" Type="int" Nullable="false" />
+                <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+                <Property Name="deptId" Type="int" />
+                <Property Name="DeptName" Type="nvarchar" MaxLength="100" />
+                <Property Name="Email" Type="nvarchar(max)" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FGetFormatedDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="Year" Type="smallint" Mode="In" />
+          <Parameter Name="Month" Type="tinyint" Mode="In" />
+          <Parameter Name="Day" Type="tinyint" Mode="In" />
+          <Parameter Name="DF" Type="tinyint" Mode="In" />
+        </Function>
+        
+        <Function Name="FgetMenuTemplateInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="MTId" Type="int" Nullable="false" />
+                <Property Name="MTName" Type="nvarchar" MaxLength="100" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FGETNDAYS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="THISYEAR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FGetNMonthCal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Mnth" Type="int" />
+                <Property Name="Days" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FgetReqDisplayLevelwise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="LevelId" Type="int" Mode="In" />
+          <Parameter Name="TypeId" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="EmpBranchId" Type="int" />
+                <Property Name="BranchName" Type="varchar" MaxLength="300" />
+                <Property Name="BranchCode" Type="varchar" MaxLength="200" />
+                <Property Name="TypeId" Type="int" />
+                <Property Name="TypeName" Type="varchar" MaxLength="100" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FgetStaffAuthorization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Said" Type="int" Nullable="false" />
+                <Property Name="Employeeid" Type="int" />
+                <Property Name="userid" Type="int" Nullable="false" />
+                <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+                <Property Name="LvlId" Type="int" />
+                <Property Name="LvlName" Type="varchar" MaxLength="200" />
+                <Property Name="EmpBranchId" Type="int" />
+                <Property Name="BranchName" Type="nvarchar" MaxLength="500" />
+                <Property Name="BranchCode" Type="varchar" MaxLength="200" />
+                <Property Name="SupervisorId" Type="int" />
+                <Property Name="SupervisorName" Type="nvarchar" MaxLength="100" Nullable="false" />
+                <Property Name="Status" Type="int" />
+                <Property Name="StatusName" Type="varchar" MaxLength="6" Nullable="false" />
+                <Property Name="TypeId" Type="int" Nullable="false" />
+                <Property Name="TypeName" Type="varchar" MaxLength="200" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="ChaInvBillingModelStoreContainer" />
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ChaInvBillingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="fgetBranchDetails_Result">
+          <Property Name="BranchId" Type="Int32" />
+          <Property Name="BranchName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BranchCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </ComplexType>
+        <ComplexType Name="FgetBrand_Result">
+          <Property Name="Bid" Type="Int32" Nullable="false" />
+          <Property Name="BrandName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="BrandCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PostedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostedOn" Type="DateTime" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="StatusName" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FGetcatagoryTB_Result">
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PAId" Type="Int32" />
+          <Property Name="FullCategoryName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LVL" Type="Byte" />
+          <Property Name="ParentLvl" Type="Int32" />
+          <Property Name="LVLHR" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </ComplexType>
+        <ComplexType Name="fgetCategoryMaster_Result">
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PAId" Type="Int32" />
+          <Property Name="FullCategoryName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="LVL" Type="Byte" />
+          <Property Name="ParentLvl" Type="Int32" />
+          <Property Name="LVLdetails" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="StatusName" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CategoryCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </ComplexType>
+        <ComplexType Name="FgetCustomerTB_Result">
+          <Property Name="CustID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CtypeId" Type="Int32" />
+          <Property Name="CustomerType" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Panno" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationDate" Type="DateTime" />
+          <Property Name="MobileNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TemporaryAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostedOn" Type="DateTime" />
+        </ComplexType>
+        <ComplexType Name="FgetEmployeeInfoTB_Result">
+          <Property Name="UserId" Type="Int32" Nullable="true" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="deptId" Type="Int32" Nullable="true" />
+          <Property Name="DeptName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="FgetEmployeeSupervisorlist_Result">
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="LvlId" Type="Int32" />
+          <Property Name="Level" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="deptid" Type="Int32" />
+          <Property Name="DeptName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </ComplexType>
+        <ComplexType Name="FgetItemMasterList_Result">
+          <Property Name="Itemid" Type="Int32" Nullable="false" />
+          <Property Name="ItemTypeId" Type="Int32" />
+          <Property Name="ItemTypeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CatagoryId" Type="Int32" />
+          <Property Name="CategoryName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ItemName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UnitOfMeasureId" Type="Int32" />
+          <Property Name="UnitName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ManifactureId" Type="Int32" />
+          <Property Name="ManifactureName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BrandId" Type="Int32" />
+          <Property Name="BrandName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ModelId" Type="Int32" />
+          <Property Name="ModelName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="UniversalProductCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ManifacturePartNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="InternationalArticleNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ISBN" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PurchaseRate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PurchaseTaxId" Type="Int32" />
+          <Property Name="PurchaseTax" Type="String" MaxLength="403" FixedLength="false" Unicode="false" />
+          <Property Name="PurchaseTds" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalesRate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalesTaxid" Type="Int32" />
+          <Property Name="SalesTax" Type="String" MaxLength="403" FixedLength="false" Unicode="false" />
+          <Property Name="SalesTds" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MaxStocklvl" Type="Int32" />
+          <Property Name="MinStocklvl" Type="Int32" />
+          <Property Name="ReorderPoint" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="StatusName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostedOn" Type="DateTime" />
+        </ComplexType>
+        <ComplexType Name="fgetLevelAuthorityType_Result">
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="LauthorityType" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </ComplexType>
+        <ComplexType Name="FgetMaifacture_Result">
+          <Property Name="Mid" Type="Int32" Nullable="false" />
+          <Property Name="ManifactureName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ManifactureCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="StatusName" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fgetMasterModel_Result">
+          <Property Name="Mid" Type="Int32" Nullable="false" />
+          <Property Name="ModelName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ModelCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="StatusName" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FgetMasterSize_Result">
+          <Property Name="Sid" Type="Int32" Nullable="false" />
+          <Property Name="SizeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SizeCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="StatusName" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FGetNMonthCal_Result">
+          <Property Name="Mnth" Type="Int32" />
+          <Property Name="Days" Type="Int32" />
+        </ComplexType>
+        <ComplexType Name="FgetReqDisplayLevelwise_Result">
+          <Property Name="EmpBranchId" Type="Int32" />
+          <Property Name="BranchName" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="BranchCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TypeId" Type="Int32" />
+          <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </ComplexType>
+        <ComplexType Name="FgetStaffAuthorization_Result">
+          <Property Name="Said" Type="Int32" Nullable="false" />
+          <Property Name="Employeeid" Type="Int32" Nullable="true" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LvlId" Type="Int32" Nullable="true" />
+          <Property Name="LvlName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="EmpBranchId" Type="Int32" Nullable="true" />
+          <Property Name="BranchName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Name="BranchCode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="SupervisorId" Type="Int32" Nullable="true" />
+          <Property Name="SupervisorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="true" />
+          <Property Name="StatusName" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FgetSupplier_Result">
+          <Property Name="SId" Type="Int32" Nullable="false" />
+          <Property Name="SupplierNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="350" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContactName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryRegion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StateProvience" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TelNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FaxNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="StatusName" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostedOn" Type="DateTime" />
+        </ComplexType>
+        <ComplexType Name="FgetTaxMaster_Result">
+          <Property Name="TId" Type="Int32" Nullable="false" />
+          <Property Name="TaxName" Type="String" MaxLength="403" FixedLength="false" Unicode="false" />
+          <Property Name="TaxRate" Type="Decimal" Precision="19" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="FgetUnitOfMeasure_Result">
+          <Property Name="UId" Type="Int32" Nullable="false" />
+          <Property Name="UnitName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USymbol" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PostedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostedOn" Type="DateTime" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="StatusName" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+        </ComplexType>
+        <EntityContainer Name="ChaInvBillingEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="fgetBranchDetails" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetBranchDetails_Result)" />
+          <FunctionImport Name="FgetBrand" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetBrand_Result)" />
+          <FunctionImport Name="FGetcatagoryTB" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FGetcatagoryTB_Result)" />
+          <FunctionImport Name="fgetCategoryMaster" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetCategoryMaster_Result)" />
+          <FunctionImport Name="FgetCustomerTB" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetCustomerTB_Result)" />
+          <FunctionImport Name="FgetEmployeeInfoTB" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetEmployeeInfoTB_Result)" />
+          <FunctionImport Name="FgetEmployeeSupervisorlist" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetEmployeeSupervisorlist_Result)" />
+          <FunctionImport Name="FgetItemMasterList" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetItemMasterList_Result)" />
+          <FunctionImport Name="fgetLevelAuthorityType" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetLevelAuthorityType_Result)" />
+          <FunctionImport Name="FgetMaifacture" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetMaifacture_Result)" />
+          <FunctionImport Name="fgetMasterModel" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetMasterModel_Result)" />
+          <FunctionImport Name="FgetMasterSize" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetMasterSize_Result)" />
+          <FunctionImport Name="FGetNMonthCal" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FGetNMonthCal_Result)">
+          <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FgetReqDisplayLevelwise" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetReqDisplayLevelwise_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FgetStaffAuthorization" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetStaffAuthorization_Result)" />
+          <FunctionImport Name="FgetSupplier" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetSupplier_Result)" />
+          <FunctionImport Name="FgetTaxMaster" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetTaxMaster_Result)" />
+          <FunctionImport Name="FgetUnitOfMeasure" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetUnitOfMeasure_Result)" />
+          <FunctionImport Name="PcreateBrand">
+            <Parameter Name="Bid" Mode="In" Type="Int32" />
+            <Parameter Name="BrandName" Mode="In" Type="String" />
+            <Parameter Name="BrandCode" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="Postedby" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PCreateCategoryMaster" ReturnType="Collection(Decimal)">
+            <Parameter Name="CategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="CategoryName" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PAId" Mode="In" Type="Int32" />
+            <Parameter Name="Level" Mode="In" Type="Byte" />
+            <Parameter Name="CategoryCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PcreateManifactureMaster">
+            <Parameter Name="Mid" Mode="In" Type="Int32" />
+            <Parameter Name="ManifactureName" Mode="In" Type="String" />
+            <Parameter Name="ManifactureCode" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PcreateMasterModel">
+            <Parameter Name="Mid" Mode="In" Type="Int32" />
+            <Parameter Name="ModelName" Mode="In" Type="String" />
+            <Parameter Name="ModelCode" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PCreateMasterSize">
+            <Parameter Name="Sid" Mode="In" Type="Int32" />
+            <Parameter Name="SizeName" Mode="In" Type="String" />
+            <Parameter Name="SizeCode" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PcreateUnitOfMeasure">
+            <Parameter Name="UId" Mode="In" Type="Int32" />
+            <Parameter Name="UnitName" Mode="In" Type="String" />
+            <Parameter Name="USymbol" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PsetCustomer" ReturnType="Collection(Int32)">
+            <Parameter Name="CustID" Mode="In" Type="Int32" />
+            <Parameter Name="CtypeId" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="Panno" Mode="In" Type="String" />
+            <Parameter Name="RegistrationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="MobileNo" Mode="In" Type="String" />
+            <Parameter Name="TelephoneNo" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="TemporaryAddress" Mode="In" Type="String" />
+            <Parameter Name="PermanentAddress" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="Street" Mode="In" Type="String" />
+            <Parameter Name="Postalcode" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PSetItemMaster">
+            <Parameter Name="ItemId" Mode="In" Type="Int32" />
+            <Parameter Name="ItemTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="CatagoryId" Mode="In" Type="Int32" />
+            <Parameter Name="ItemName" Mode="In" Type="String" />
+            <Parameter Name="ItemCode" Mode="In" Type="String" />
+            <Parameter Name="UnitOfMeasureId" Mode="In" Type="Int32" />
+            <Parameter Name="ManifactureId" Mode="In" Type="Int32" />
+            <Parameter Name="BrandId" Mode="In" Type="Int32" />
+            <Parameter Name="ModelId" Mode="In" Type="Int32" />
+            <Parameter Name="UniversalProductCode" Mode="In" Type="String" />
+            <Parameter Name="ManifacturePartNo" Mode="In" Type="String" />
+            <Parameter Name="InternationalArticleNo" Mode="In" Type="String" />
+            <Parameter Name="ISBN" Mode="In" Type="String" />
+            <Parameter Name="Barcode" Mode="In" Type="String" />
+            <Parameter Name="PurchaseRate" Mode="In" Type="Decimal" />
+            <Parameter Name="PurchaseTaxId" Mode="In" Type="Int32" />
+            <Parameter Name="SalesRate" Mode="In" Type="Decimal" />
+            <Parameter Name="SalesTaxid" Mode="In" Type="Int32" />
+            <Parameter Name="MaxStocklvl" Mode="In" Type="Int32" />
+            <Parameter Name="MinStocklvl" Mode="In" Type="Int32" />
+            <Parameter Name="DangerStocklvl" Mode="In" Type="Int32" />
+            <Parameter Name="EOQlevel" Mode="In" Type="Int32" />
+            <Parameter Name="ReorderPoint" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PSetSupplier">
+            <Parameter Name="SId" Mode="In" Type="Int32" />
+            <Parameter Name="SupplierName" Mode="In" Type="String" />
+            <Parameter Name="ContactName" Mode="In" Type="String" />
+            <Parameter Name="PanNo" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="Street" Mode="In" Type="String" />
+            <Parameter Name="PostalCode" Mode="In" Type="String" />
+            <Parameter Name="TelNo" Mode="In" Type="String" />
+            <Parameter Name="FaxNo" Mode="In" Type="String" />
+            <Parameter Name="MobileNo" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PostedBy" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="SqlQueryNotificationStoredProcedure_0619d09a_0bee_4a90_9790_880ab6021c02" />
+          <FunctionImport Name="FgetMasterLocation" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetMasterLocation_Result)" />
+          <FunctionImport Name="FgetMenuTemplateInfo" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetMenuTemplateInfo_Result)" />
+          <FunctionImport Name="FgetGetPassPrintreport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetGetPassPrintreport_Result)">
+          <Parameter Name="Stmid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fgetInvBalance" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetInvBalance_Result)" />
+          <FunctionImport Name="FgetPendinStoreTransfer" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetPendinStoreTransfer_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FgetStoreTransferItemPening" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetStoreTransferItemPening_Result)">
+          <Parameter Name="RMId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fGetRptRequestedReport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fGetRptRequestedReport_Result)">
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="Pagesize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fGetRptRequestedReportExport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fGetRptRequestedReportExport_Result)">
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fgetUserDetails" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetUserDetails_Result)" />
+          <FunctionImport Name="fGetRptStoreTransferReport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fGetRptStoreTransferReport_Result)">
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="Pagesize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fGetRptStoreTransferReportExport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fGetRptStoreTransferReportExport_Result)">
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fgetPurchaseList" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetPurchaseList_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="Pagesize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fgetPurchaseListExport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetPurchaseListExport_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="FgetPurchaseSerialNolist" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetPurchaseSerialNolist_Result)" />
+          <FunctionImport Name="FgetCpmpanyInfo" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetCpmpanyInfo_Result)" />
+          <FunctionImport Name="FGetNepaliMonthList" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FGetNepaliMonthList_Result)" />
+          <FunctionImport Name="PurchaseSale" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.PurchaseSale_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseSaleExport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.PurchaseSaleExport_Result)">
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="Month" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FgetConsumptionTransferPendinglist" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetConsumptionTransferPendinglist_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="Pagesize" Mode="In" Type="Int32" />
+            <Parameter Name="Search" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FgetConsumptionTransferPendinglistViewDetails" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetConsumptionTransferPendinglistViewDetails_Result)">
+          <Parameter Name="Stmid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fGetRptConsumptionRemReport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fGetRptConsumptionRemReport_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="Pagesize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fGetRptConsumptionRemReportExport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fGetRptConsumptionRemReportExport_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fGetRptConsumptionTransferReport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fGetRptConsumptionTransferReport_Result)">
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="Pagesize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="fGetRptConsumptionTransferReportExport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fGetRptConsumptionTransferReportExport_Result)">
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FgetItemreturnDetailsTB" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetItemreturnDetailsTB_Result)">
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FgetItemreturnDetailsTBExport" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetItemreturnDetailsTBExport_Result)">
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="FgetInventoryStatement" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetInventoryStatement_Result)">
+            <Parameter Name="ItemId" Mode="In" Type="Int32" />
+            <Parameter Name="Fdate" Mode="In" Type="DateTime" />
+            <Parameter Name="Tdate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="fgetInvSummary" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.fgetInvSummary_Result)" />
+          <FunctionImport Name="FgetReturnMainPendingForAppoval" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetReturnMainPendingForAppoval_Result)">
+            <Parameter Name="EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="LevelId" Mode="In" Type="Int32" />
+            <Parameter Name="TypeId" Mode="In" Type="Int32" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+            <Parameter Name="Pagesize" Mode="In" Type="Int32" />
+            <Parameter Name="Search" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FgetReturnMainPendingForAppovalItemList" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetReturnMainPendingForAppovalItemList_Result)">
+          <Parameter Name="Rid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FgetReturnMainPendingForAppovalItemListwithSerialMac" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetReturnMainPendingForAppovalItemListwithSerialMac_Result)">
+          <Parameter Name="RDid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FgetStoreTransferItemPendingDetails" IsComposable="true" ReturnType="Collection(ChaInvBillingModel.FgetStoreTransferItemPendingDetails_Result)" />
+        </EntityContainer>
+        <ComplexType Name="FgetMasterLocation_Result">
+          <Property Type="Int32" Name="Lid" Nullable="false" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="LocationCode" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="statusId" Nullable="true" />
+          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="PostedBy" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="FgetMenuTemplateInfo_Result">
+          <Property Type="Int32" Name="MTId" Nullable="false" />
+          <Property Type="String" Name="MTName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="FgetGetPassPrintreport_Result">
+          <Property Type="Int64" Name="SNo" Nullable="true" />
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="RequestedBy" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="TransferBy" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="TransferOn" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="Qnty" Nullable="false" />
+          <Property Type="Int32" Name="RDId" Nullable="false" />
+          <Property Type="Int32" Name="STMId" Nullable="false" />
+          <Property Type="String" Name="StoreRemarks" Nullable="false" />
+          <Property Type="Int32" Name="STDId" Nullable="false" />
+          <Property Type="String" Name="SerialNo" Nullable="false" />
+          <Property Type="String" Name="MacNo" Nullable="false" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="RequestDateAD" Nullable="false" Precision="23" />
+          <Property Type="String" Name="RequestDateBS" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="fgetInvBalance_Result">
+          <Property Type="Int32" Name="itemid" Nullable="true" />
+          <Property Type="Int32" Name="InQnty" Nullable="true" />
+          <Property Type="Int32" Name="OutQnty" Nullable="true" />
+          <Property Type="Int32" Name="Balance" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="FgetPendinStoreTransfer_Result">
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="DateTime" Name="RequestOn" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="DeptName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Requestedby" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FgetStoreTransferItemPening_Result">
+          <Property Type="Int32" Name="RdId" Nullable="false" />
+          <Property Type="Int32" Name="RMID" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitofMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Modelname" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ManifactureName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="RemQntyToTransfer" Nullable="true" />
+          <Property Type="Int32" Name="PurposeTypeId" Nullable="true" />
+          <Property Type="String" Name="PurposeType" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="InvestmentCodeId" Nullable="true" />
+          <Property Type="String" Name="InvestmentCodeName" Nullable="false" MaxLength="50" />
+          <Property Type="Byte" Name="Status" Nullable="false" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="BusinessUnitId" Nullable="true" />
+          <Property Type="String" Name="BUnitName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="UnitOfMeasureId" Nullable="true" />
+          <Property Type="Int32" Name="ReqQnty" Nullable="false" />
+          <Property Type="Int32" Name="TrQnty" Nullable="false" />
+          <Property Type="Int32" Name="Balance" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fGetRptRequestedReport_Result">
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="Int32" Name="PostedBy" Nullable="false" />
+          <Property Type="String" Name="DeptName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="BUnitName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="PostedByName" Nullable="true" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ReqQnty" Nullable="false" />
+          <Property Type="Int32" Name="TrQnty" Nullable="false" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="RequestedBy" Nullable="false" />
+          <Property Type="String" Name="RequestedByName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="fGetRptRequestedReportExport_Result">
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="Int32" Name="PostedBy" Nullable="false" />
+          <Property Type="String" Name="DeptName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="BUnitName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="PostedByName" Nullable="true" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ReqQnty" Nullable="false" />
+          <Property Type="Int32" Name="TrQnty" Nullable="false" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="RequestedBy" Nullable="false" />
+          <Property Type="String" Name="RequestedByName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="fgetUserDetails_Result">
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="MTId" Nullable="false" />
+          <Property Type="Int32" Name="EmployeeId" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fGetRptStoreTransferReport_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="true" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="Int32" Name="PostedBy" Nullable="false" />
+          <Property Type="String" Name="DeptName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="BUnitName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="ReqQnty" Nullable="false" />
+          <Property Type="Int32" Name="StoreTrQnty" Nullable="false" />
+          <Property Type="Int32" Name="RemQnty" Nullable="true" />
+          <Property Type="Int32" Name="STDId" Nullable="false" />
+          <Property Type="Int32" Name="StockOutQnty" Nullable="true" />
+          <Property Type="String" Name="PostedByName" Nullable="true" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ApprovedBy" Nullable="true" />
+          <Property Type="String" Name="ApprovedByName" Nullable="true" />
+          <Property Type="Byte" Name="ItemStatus" Nullable="false" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="RequestedByName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="RequestedBy" Nullable="false" />
+          <Property Type="String" Name="StoreRemarks" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="AccRemarks" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fGetRptStoreTransferReportExport_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="true" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="Int32" Name="PostedBy" Nullable="false" />
+          <Property Type="String" Name="DeptName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="BUnitName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="ReqQnty" Nullable="false" />
+          <Property Type="Int32" Name="StoreTrQnty" Nullable="false" />
+          <Property Type="Int32" Name="RemQnty" Nullable="true" />
+          <Property Type="Int32" Name="STDId" Nullable="false" />
+          <Property Type="Int32" Name="StockOutQnty" Nullable="true" />
+          <Property Type="String" Name="PostedByName" Nullable="true" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="ApprovedBy" Nullable="true" />
+          <Property Type="String" Name="ApprovedByName" Nullable="true" />
+          <Property Type="Byte" Name="ItemStatus" Nullable="false" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="RequestedByName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="RequestedBy" Nullable="false" />
+          <Property Type="String" Name="StoreRemarks" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="AccRemarks" Nullable="true" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="fgetPurchaseList_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="Int32" Name="PuId" Nullable="false" />
+          <Property Type="String" Name="PoNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="PurchaseInvoiceNo" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="PurchaseDateAD" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PurchaseDateBS" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="PurchaseSupplierId" Nullable="true" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="350" />
+          <Property Type="String" Name="ContactName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SupplierEmail" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PdId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="true" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="PrQnty" Nullable="true" />
+          <Property Type="Int32" Name="Rate" Nullable="true" />
+          <Property Type="Int32" Name="TotalAmount" Nullable="true" />
+          <Property Type="Int32" Name="statusId" Nullable="true" />
+          <Property Type="String" Name="Statusname" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Itemremarks" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ManifactureName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ModelName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UniversalProductCode" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SerialNo" Nullable="true" />
+          <Property Type="String" Name="Macno" Nullable="true" />
+          <Property Type="String" Name="ManifacturePartNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="InternationalArticleNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ISBN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ExpiryDateBS" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BrandName" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="fgetPurchaseListExport_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="Int32" Name="PuId" Nullable="false" />
+          <Property Type="String" Name="PoNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="PurchaseInvoiceNo" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="PurchaseDateAD" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PurchaseDateBS" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="PurchaseSupplierId" Nullable="true" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="350" />
+          <Property Type="String" Name="ContactName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SupplierEmail" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PdId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="true" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="PrQnty" Nullable="true" />
+          <Property Type="Int32" Name="Rate" Nullable="true" />
+          <Property Type="Int32" Name="TotalAmount" Nullable="true" />
+          <Property Type="Int32" Name="statusId" Nullable="true" />
+          <Property Type="String" Name="Statusname" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Itemremarks" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ManifactureName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ModelName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UniversalProductCode" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SerialNo" Nullable="true" />
+          <Property Type="String" Name="Macno" Nullable="true" />
+          <Property Type="String" Name="ManifacturePartNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="InternationalArticleNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ISBN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ExpiryDateBS" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="BrandName" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FgetPurchaseSerialNolist_Result">
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="PdId" Nullable="false" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="FgetCpmpanyInfo_Result">
+          <Property Type="Int32" Name="Sno" Nullable="true" />
+          <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="CompanyAddress" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Logo" Nullable="true" MaxLength="800" />
+          <Property Type="String" Name="PanNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CompanyNameNp" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CompanAddNp" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FGetNepaliMonthList_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Month" Nullable="false" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="PurchaseSale_Result">
+          <Property Type="DateTime" Name="PurchaseDateAd" Nullable="true" Precision="10" />
+          <Property Type="String" Name="PurchaseDateBs" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="PurchaseInvoiceNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="350" />
+          <Property Type="String" Name="PanNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ItemId" Nullable="true" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="PrQnty" Nullable="true" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Rate" Nullable="true" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="Decimal" Name="vat" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="GrandTotal" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="String" Name="ImportCountry" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ImportPraganPatraNo" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="ImportPraganPatraDateAd" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ImportPraganPatraDateBS" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="Yr" Nullable="true" />
+          <Property Type="Byte" Name="Mnth" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="PurchaseSaleExport_Result">
+          <Property Type="Int64" Name="SNo" Nullable="true" />
+          <Property Type="DateTime" Name="PurchaseDateAd" Nullable="true" Precision="10" />
+          <Property Type="String" Name="PurchaseDateBs" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="PurchaseInvoiceNo" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="350" />
+          <Property Type="String" Name="PanNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ItemId" Nullable="true" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="PrQnty" Nullable="true" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Rate" Nullable="true" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="Decimal" Name="vat" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="GrandTotal" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="String" Name="ImportCountry" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ImportPraganPatraNo" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="ImportPraganPatraDateAd" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ImportPraganPatraDateBS" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="Yr" Nullable="true" />
+          <Property Type="Byte" Name="Mnth" Nullable="true" />
+          <Property Type="String" Name="Usymbol" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FgetConsumptionTransferPendinglist_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="Int32" Name="STMId" Nullable="false" />
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="String" Name="DeptName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="locationId" Nullable="true" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="RequestedDate" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="RequestedBy" Nullable="false" />
+          <Property Type="String" Name="RequestedByName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="TransferBy" Nullable="false" />
+          <Property Type="String" Name="StoreTransferOn" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="TransferbyName" Nullable="true" />
+          <Property Type="Int32" Name="AccBy" Nullable="true" />
+          <Property Type="String" Name="AccByName" Nullable="true" />
+          <Property Type="String" Name="AccRemarks" Nullable="true" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitofMeasure" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FgetConsumptionTransferPendinglistViewDetails_Result">
+          <Property Type="Int32" Name="STMId" Nullable="false" />
+          <Property Type="Int32" Name="STDId" Nullable="false" />
+          <Property Type="Int32" Name="STIDId" Nullable="true" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="RequestedBy" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ApprovedBy" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="true" />
+          <Property Type="String" Name="DeptName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="locationId" Nullable="true" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Qnty" Nullable="false" />
+          <Property Type="Int32" Name="RemToTranferQnty" Nullable="true" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IsContainSerialMac" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fGetRptConsumptionRemReport_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="RequestedBy" Nullable="false" />
+          <Property Type="String" Name="RequestedByName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="DeptName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="StoreTrQny" Nullable="false" />
+          <Property Type="Int32" Name="ConsumeQnty" Nullable="true" />
+          <Property Type="Int32" Name="RemQnty" Nullable="true" />
+          <Property Type="Int32" Name="BUnitId" Nullable="false" />
+          <Property Type="String" Name="BUnitName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="PurposeTypeId" Nullable="true" />
+          <Property Type="String" Name="PurposeType" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="StoreTrBy" Nullable="true" />
+          <Property Type="String" Name="StoreTrByName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="StoreTrOn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="fGetRptConsumptionRemReportExport_Result">
+          <Property Type="Int64" Name="SNo" Nullable="true" />
+          <Property Type="Int32" Name="RMId" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="RequestedBy" Nullable="false" />
+          <Property Type="String" Name="RequestedByName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitOfMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="DeptName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="StoreTrQny" Nullable="false" />
+          <Property Type="Int32" Name="ConsumeQnty" Nullable="true" />
+          <Property Type="Int32" Name="RemQnty" Nullable="true" />
+          <Property Type="Int32" Name="BUnitId" Nullable="false" />
+          <Property Type="String" Name="BUnitName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="PurposeTypeId" Nullable="true" />
+          <Property Type="String" Name="PurposeType" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="StoreTrBy" Nullable="true" />
+          <Property Type="String" Name="StoreTrByName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="StoreTrOn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="fGetRptConsumptionTransferReport_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="DTDId" Nullable="false" />
+          <Property Type="String" Name="DeptName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="DeptTo" Nullable="true" />
+          <Property Type="Int32" Name="EmpId" Nullable="true" />
+          <Property Type="Int32" Name="TransferBy" Nullable="false" />
+          <Property Type="String" Name="DepartmentFrom" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ConsumptionTo" Nullable="true" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ConsumptionQnty" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ConsumptionRemarks" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="TransferOn" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="AccDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="AccBy" Nullable="true" />
+          <Property Type="String" Name="AccByName" Nullable="true" />
+          <Property Type="String" Name="TransferByName" Nullable="true" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Postedby" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="ConsumptionDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="fGetRptConsumptionTransferReportExport_Result">
+          <Property Type="Int64" Name="SNo" Nullable="true" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="BranchId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="LocationName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="DTDId" Nullable="false" />
+          <Property Type="String" Name="DeptName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="DeptTo" Nullable="true" />
+          <Property Type="Int32" Name="EmpId" Nullable="true" />
+          <Property Type="Int32" Name="TransferBy" Nullable="false" />
+          <Property Type="String" Name="DepartmentFrom" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ConsumptionTo" Nullable="true" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ConsumptionQnty" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ConsumptionRemarks" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="TransferOn" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="AccDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="AccBy" Nullable="true" />
+          <Property Type="String" Name="AccByName" Nullable="true" />
+          <Property Type="String" Name="TransferByName" Nullable="true" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Postedby" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="ConsumptionDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="FgetItemreturnDetailsTB_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="Int32" Name="Rid" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DepId" Nullable="false" />
+          <Property Type="String" Name="DepartmentName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="branchid" Nullable="false" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="Qnty" Nullable="false" />
+          <Property Type="Int32" Name="Rdid" Nullable="true" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="PostedBy" Nullable="true" />
+          <Property Type="String" Name="PostedByName" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="true" Precision="16" />
+          <Property Type="String" Name="postedRemarks" Nullable="true" />
+          <Property Type="Int32" Name="AcknowledgedBy" Nullable="true" />
+          <Property Type="String" Name="AcknowledgedByName" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="AcknowledgedOn" Nullable="true" Precision="16" />
+          <Property Type="String" Name="AcknowledgeRmks" Nullable="true" />
+          <Property Type="Byte" Name="StatusId" Nullable="true" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="RejectedBy" Nullable="true" />
+          <Property Type="String" Name="RejectedByName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="RejectRemarks" Nullable="true" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="locationName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="returnTypeId" Nullable="true" />
+          <Property Type="String" Name="ReturnType" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="FgetItemreturnDetailsTBExport_Result">
+          <Property Type="Int32" Name="Rid" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DepId" Nullable="false" />
+          <Property Type="String" Name="DepartmentName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="branchid" Nullable="false" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="Qnty" Nullable="false" />
+          <Property Type="Int32" Name="Rdid" Nullable="true" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="PostedBy" Nullable="true" />
+          <Property Type="String" Name="PostedByName" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PostedOn" Nullable="true" Precision="16" />
+          <Property Type="String" Name="postedRemarks" Nullable="true" />
+          <Property Type="Int32" Name="AcknowledgedBy" Nullable="true" />
+          <Property Type="String" Name="AcknowledgedByName" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="AcknowledgedOn" Nullable="true" Precision="16" />
+          <Property Type="String" Name="AcknowledgeRmks" Nullable="true" />
+          <Property Type="Byte" Name="StatusId" Nullable="true" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="RejectedBy" Nullable="true" />
+          <Property Type="String" Name="RejectedByName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="RejectRemarks" Nullable="true" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="locationName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="returnTypeId" Nullable="true" />
+          <Property Type="String" Name="ReturnType" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="FgetInventoryStatement_Result">
+          <Property Type="Int32" Name="Sno" Nullable="true" />
+          <Property Type="Int32" Name="ItemId" Nullable="true" />
+          <Property Type="String" Name="Itemname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="details" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="TrasactionDateAD" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TrasactionDateBS" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="InQnty" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="OutQnty" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Balance" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="String" Name="Remarks" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="fgetInvSummary_Result">
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="ReorderPoint" Nullable="true" />
+          <Property Type="Int32" Name="InQnty" Nullable="true" />
+          <Property Type="Int32" Name="OutQnty" Nullable="true" />
+          <Property Type="Int32" Name="Balance" Nullable="true" />
+          <Property Type="String" Name="InvStatus" Nullable="false" MaxLength="16" />
+          <Property Type="Int32" Name="ItemId" Nullable="true" />
+          <Property Type="Int32" Name="MaxStocklvl" Nullable="true" />
+          <Property Type="Int32" Name="MinStocklvl" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="FgetReturnMainPendingForAppoval_Result">
+          <Property Type="Int32" Name="Totalcount" Nullable="true" />
+          <Property Type="Int32" Name="Rid" Nullable="false" />
+          <Property Type="String" Name="ReqNo" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="RequestedDate" Nullable="true" Precision="16" />
+          <Property Type="Int32" Name="DepId" Nullable="false" />
+          <Property Type="String" Name="DepartmentName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="branchid" Nullable="false" />
+          <Property Type="String" Name="BranchName" Nullable="true" MaxLength="500" />
+          <Property Type="Byte" Name="StatusId" Nullable="true" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="PostebyName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="locationId" Nullable="true" />
+          <Property Type="String" Name="locationName" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="FgetReturnMainPendingForAppovalItemList_Result">
+          <Property Type="Int32" Name="RdId" Nullable="false" />
+          <Property Type="Int32" Name="Rid" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="Qnty" Nullable="false" />
+          <Property Type="String" Name="Remarks" Nullable="true" />
+          <Property Type="Int32" Name="ReturnTypeId" Nullable="true" />
+          <Property Type="String" Name="ReturnType" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="IsContainSerialMac" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FgetReturnMainPendingForAppovalItemListwithSerialMac_Result">
+          <Property Type="Int32" Name="Remc" Nullable="false" />
+          <Property Type="Int32" Name="Rdid" Nullable="true" />
+          <Property Type="String" Name="SerialNo" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="MacNo" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="FgetStoreTransferItemPendingDetails_Result">
+          <Property Type="Int32" Name="RdId" Nullable="false" />
+          <Property Type="Int32" Name="RMID" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="ItemName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="UnitOfMeasureId" Nullable="true" />
+          <Property Type="String" Name="UnitofMeasure" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Modelname" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="ManifactureName" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="ReqQnty" Nullable="false" />
+          <Property Type="Int32" Name="TrQnty" Nullable="false" />
+          <Property Type="Int32" Name="RemQntyToTransfer" Nullable="true" />
+          <Property Type="Int32" Name="Balance" Nullable="true" />
+          <Property Type="Int32" Name="PurposeTypeId" Nullable="true" />
+          <Property Type="String" Name="PurposeType" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="InvestmentCodeId" Nullable="true" />
+          <Property Type="String" Name="InvestmentCodeName" Nullable="true" MaxLength="50" />
+          <Property Type="Byte" Name="Status" Nullable="false" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="BusinessUnitId" Nullable="true" />
+          <Property Type="String" Name="BUnitName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ChaInvBillingModelStoreContainer" CdmEntityContainer="ChaInvBillingEntities">
+          <FunctionImportMapping FunctionName="ChaInvBillingModel.Store.fgetBranchDetails" FunctionImportName="fgetBranchDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ChaInvBillingModel.fgetBranchDetails_Result">
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="ChaInvBillingModel.Store.FgetEmployeeInfoTB" FunctionImportName="FgetEmployeeInfoTB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ChaInvBillingModel.FgetEmployeeInfoTB_Result">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="deptId" ColumnName="deptId" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="ChaInvBillingModel.Store.FGetNMonthCal" FunctionImportName="FGetNMonthCal">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ChaInvBillingModel.FGetNMonthCal_Result">
+                <ScalarProperty Name="Mnth" ColumnName="Mnth" />
+                <ScalarProperty Name="Days" ColumnName="Days" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="ChaInvBillingModel.Store.FgetReqDisplayLevelwise" FunctionImportName="FgetReqDisplayLevelwise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ChaInvBillingModel.FgetReqDisplayLevelwise_Result">
+                <ScalarProperty Name="EmpBranchId" ColumnName="EmpBranchId" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="ChaInvBillingModel.Store.FgetStaffAuthorization" FunctionImportName="FgetStaffAuthorization">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ChaInvBillingModel.FgetStaffAuthorization_Result">
+                <ScalarProperty Name="Said" ColumnName="Said" />
+                <ScalarProperty Name="Employeeid" ColumnName="Employeeid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="LvlId" ColumnName="LvlId" />
+                <ScalarProperty Name="LvlName" ColumnName="LvlName" />
+                <ScalarProperty Name="EmpBranchId" ColumnName="EmpBranchId" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="SupervisorId" ColumnName="SupervisorId" />
+                <ScalarProperty Name="SupervisorName" ColumnName="SupervisorName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FgetMenuTemplateInfo" FunctionName="ChaInvBillingModel.Store.FgetMenuTemplateInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ChaInvBillingModel.FgetMenuTemplateInfo_Result">
+                <ScalarProperty Name="MTId" ColumnName="MTId" />
+                <ScalarProperty Name="MTName" ColumnName="MTName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

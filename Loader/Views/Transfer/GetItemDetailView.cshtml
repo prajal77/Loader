@@ -1,0 +1,80 @@
+﻿
+@model Loader.ViewModel.Metadata.FgetPurchaseSerialNolist_ResultMetaData
+
+@*@model  List<Loader.ViewModel.Metadata.FgetPurchaseSerialNolist_ResultMetaData>*@
+
+@{ 
+    int QntyNo = Convert.ToInt32(ViewBag.numberOfRows);
+    Layout = null;
+}
+
+<tr>
+    <td colspan="1"></td>
+
+    <td colspan="10">
+        <div>
+            <table class="table table-hover table-responsive GetMacSerialNoTable" style="border:1px">
+                <thead>
+                    <tr>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Serial No
+                        </th>
+                        <th>
+                            Mac No
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i=0; i<QntyNo; i++) 
+                    { 
+                        @Html.Partial("_GetItemDetailView", Model)
+                    }
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="4"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="form-group col-md-11">
+            <input type="button" class="btn btn-sm btn-danger pull-right CancelMacSerial" value="Cancel" />
+        </div>
+
+    </td>
+</tr>
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        //$(".GetMacSerialNoTable").floatThead({ scrollingTop: 100, floatThead: true });
+
+        function ArrangeMacSerialNo() {
+            debugger;
+            $(".GetMacSerialNoTable").each(function (tr, objs) {
+                var Count = 0;
+
+                $(objs).find("tbody > tr").each(function (trCount, obj) {
+                    $(obj).find("#SNo").text(++Count);
+
+                });
+            })
+        }
+        ArrangeMacSerialNo();
+
+
+        //cancle the mac serial box
+        $(document).on("click", ".CancelMacSerial", function (e) {
+            e.stopImmediatePropagation();
+            $(this).closest("tr").remove();
+        })
+
+    });
+</script>
+

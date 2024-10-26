@@ -1,0 +1,78 @@
+﻿@model Loader.ViewModel.Metadata.FgetPurchaseSerialNolist_ResultMetaData
+
+@{
+    Layout = null;
+}
+
+<link href="~/AdminLTE/plugins/select2/select2.css" />
+<script src="~/AdminLTE/plugins/select2/select2.js"></script>
+
+
+<tr>
+    @using (Html.BeginCollectionItem("ItemDetailList"))
+    {
+
+        @*@Html.TextBoxFor(model => model.ItemId, htmlAttributes: new { @id = "ItemId" })*@
+        @*<td id="SNo">
+        </td>*@
+
+        <td>
+            @Html.DropDownListFor(model => model.Type, Loader.CommonDropdownService.DropDownService.ExistingTypeDD(), "--select type--", new { @class = "form-control type-select", @style = "width:130px", @id = "Type" })
+            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+        </td>
+
+        <td class="dd-serialMac">
+            @Html.DropDownListFor(model => model.SerialNo, Loader.CommonDropdownService.DropDownService.ExistingSerialNoDD(), "--select SerialNo--", new { @class = "form-control select2", @style = "width:200px", @id = "SerialNo" })
+            @Html.ValidationMessageFor(model => model.SerialNo, "", new { @class = "text-danger" })
+        </td>
+
+        <td class="dd-serialMac">
+            @Html.DropDownListFor(model => model.MacNo, Loader.CommonDropdownService.DropDownService.ExistingMacNoDD(), "--select MacNo--", new { @class = "form-control select2", @style = "width:200px", @id = "MacNo" })
+            @Html.ValidationMessageFor(model => model.MacNo, "", new { @class = "text-danger" })
+        </td>
+
+        <td class="no-serailMac" style="display:none">
+            @Html.TextBoxFor(model => model.SerialNo, new { @class = "form-control SerialNo", @id = "SerialNo", @placeholder = "Enter Serial No.." })
+            @Html.ValidationMessageFor(model => model.SerialNo, "", new { @class = "text-danger" })
+        </td>
+
+        <td class="no-serailMac" style="display: none">
+            @Html.TextBoxFor(model => model.MacNo, new { @class = "form-control MacNo", @id = "MacNo", @placeholder = "Enter Mac No.." })
+            @Html.ValidationMessageFor(model => model.MacNo, "", new { @class = "text-danger" })
+        </td>
+
+           <td>
+            <h5 class="text-danger hidden ValMsg"> </h5>
+            <h5 class="text-danger hidden DupSerialNo"> </h5>
+            <h5 class="text-danger hidden DupMacNo"> </h5>
+            <h5 class="text-danger hidden DupUserId"> </h5>
+        </td>
+    }
+</tr>
+
+
+<script>
+
+    $(document).ready(function () {
+       /* $(".select2").select2();*/
+
+        $(document).on('change', ".type-select", function () {
+            var selectedType = $(this).find("option:selected").text();
+            var $row = $(this).closest('tr');
+
+            if (selectedType == "New") {
+                $row.find('.dd-serialMac').hide();
+                $row.find('.no-serailMac').show();
+                
+            } else {
+                $row.find('.dd-serialMac').show();
+                $row.find('.no-serailMac').hide();
+            }
+        });
+
+        $(".type-select").trigger('change');
+    });
+
+  
+</script>
+

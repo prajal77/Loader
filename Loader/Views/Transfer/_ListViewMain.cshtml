@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Loader.EntityDataModel.FgetPendinStoreTransfer_Result>
+
+<style>
+    .container{
+        width: 100%;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Req No</th>
+                            <th>Request On</th>
+                            <th>Branch</th>
+                            <th>Department</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Requested By</th>
+                            <th>Remarks</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var storeItme in Model)
+                        {
+                            <tr>
+                                @Html.HiddenFor(model => storeItme.RMId, new {@id="storeTRMId"})
+
+                                <td>@storeItme.ReqNo</td>
+                                <td>@storeItme.RequestOn.ToString("dd/MM/yyyy")</td>
+                                <td>@storeItme.BranchName</td>
+                                <td>@storeItme.DeptName</td>
+                                <td>@storeItme.LocationName</td>
+                                <td>@storeItme.StatusName</td>
+                                <td>@storeItme.Requestedby</td>
+                                <td>@storeItme.Remarks</td>
+                                <td>
+                                    <a href="/Transfer/RequestDetails?RMId=@storeItme.RMId" class="btn btn-sm btn-primary" id="requestDetails">Details</a>
+                                    
+                                    @*<input type="button" class="btn btn-sm btn-info" id="requestDetails" value="Request Details" />*@
+                                </td>
+                            </tr>
+                       
+                         }
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+   
+</script>

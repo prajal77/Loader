@@ -1,0 +1,203 @@
+﻿@model Loader.ViewModel.Metadata.FgetStaffAuthorization_ResultMetaData
+
+
+@{
+    var Type_Name = "";
+    int levelid = 0;
+    int supervisor = 0;
+
+    if (Model != null)
+    {
+        Type_Name = Model.TypeName;
+        levelid = Model.LvlId ?? 0;
+        supervisor = Model.SupervisorId ?? 0;
+    }
+
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="box box-body">
+    <h4 class="">
+        Create Employee Authorization
+    </h4>
+
+    @using (Html.BeginForm("CreateEmployeeAuthorization", "Employee", FormMethod.Post, new { @id = "updateEmployeeAuthorization" }))
+    {
+        <div class="box-body">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+
+                    @Html.HiddenFor(model => model.Said, htmlAttributes: new {@id="said"})
+
+
+                <div class="col-md-12" style="margin-bottom:14px;">
+                    @Html.LabelFor(model => model.TypeName, "Type Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.TypeId, Loader.CommonDropdownService.DropDownService.BranchDepartmentDD(), "---Select Branch/Department---", new { @class = "form-control", @id = "TypeId" })
+                        @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TypeName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-12 Branchdiv" id="Branchdiv" style="margin-left:1px">
+                    @Html.LabelFor(model => model.BranchName, "Branch", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.EmpBranchId, Loader.CommonDropdownService.DropDownService.BranchDetailDD(), "--Select Branch--", new { @class = "form-control", @id = "BranchId" })
+                        @Html.ValidationMessageFor(mode => Model.BranchName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-12 Departmentdiv" id="Departmentdiv" style="margin-left:1px">
+                    @Html.LabelFor(model => model.BranchName, "Department", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.DepartmentId, Loader.CommonDropdownService.DropDownService.DepartmentDropDown(), "--Select Department--", new { @class = "form-control", @id = "DepartmentId" })
+                        @Html.ValidationMessageFor(mode => Model.BranchName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12" style="margin-left:1px">
+                    @Html.LabelFor(model => model.EmployeeName, "StaffName", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.Employeeid, Loader.CommonDropdownService.DropDownService.GetEmployeeInfoDD(), "--Select Staff--", new { @class = "form-control", @id = "StaffId" })
+                        @Html.ValidationMessageFor(mode => Model.EmployeeName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="margin-bottom:14px;">
+                    @Html.LabelFor(model => model.LvlName, "Authority", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.LvlId, Loader.CommonDropdownService.DropDownService.LevelAuthorityDD(), "---Select Authority---", new { @class = "form-control", @id = "LvlId" })
+                        @Html.ValidationMessageFor(model => model.LvlName, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.LvlName, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group col-md-12" id="Authoritydiv" style="margin-left:1px">
+                    @Html.LabelFor(model => model.SupervisorName, "Supervisor", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.SupervisorId, Loader.CommonDropdownService.DropDownService.SupervisorListDD(), "---Select Supervisor---", new { @class = "form-control", @id = "SupervisorId" })
+                        @Html.ValidationMessageFor(model => model.SupervisorName, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+
+                <div class="form-group col-md-12" style="margin-left:1px">
+                    @Html.LabelFor(model => model.Status, "Active", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        <div class="input-group input-group-sm">
+                            <input type="checkbox" id="status" name="Status" value="1" @(Model != null && Model.Status == 1 ? "checked" : "") />
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger col-md-4  pull-right" })
+                </div>
+
+            </div>
+
+            <div>
+                <input type="submit" value="Update" class="btn btn-primary" style="cursor:pointer" />
+            </div>
+
+        </div>
+    }
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+
+        //case 1: hide both branch and department
+         const branchDiv = document.getElementById("Branchdiv");
+         const departmentDiv = document.getElementById("Departmentdiv");
+
+         let data = "@Type_Name";
+         let supervisor = "@supervisor";
+
+        if (data == "Branch") {
+            departmentDiv.style.display = "none";
+        } else if (data == "Department") {
+            branchDiv.style.display = "none";
+        } else {
+            departmentDiv.style.display = "none";
+            branchDiv.style.display = "none";
+        }
+
+        //case 2: display branch or department according to type
+        document.getElementById("TypeId").addEventListener("change", function () {
+            var dropdownValue = this.value;
+            const branchDiv = document.getElementById("Branchdiv");
+            const departmentDiv = document.getElementById("Departmentdiv");
+
+            if (dropdownValue == 1) {
+                branchDiv.style.display = "block";
+                departmentDiv.style.display = "none"
+            } else {
+                branchDiv.style.display = "none";
+                departmentDiv.style.display = "block"
+            }
+        });
+
+        //authority level
+        document.getElementById("LvlId").addEventListener("change", function () {
+            var dropdownValue = this.value;
+            var authorityDiv = document.getElementById("Authoritydiv");
+
+            if (dropdownValue == 1) {
+                authorityDiv.style.display = "block"
+            } else {
+                authorityDiv.style.display = "none"
+            }
+        });
+
+
+        //create employee authorization
+        $("#updateEmployeeAuthorization").submit(function () {
+            debugger;
+            var form = $(this);
+            form.validate();
+            if (form.valid() == false) {
+                InfoAlert("The Required Feild is Empty", 5000);
+                return false;
+            }
+
+            var Action = $(this).attr('action');
+            var container = $("#SectionContent");
+            var formData = new FormData($(this)[0]);
+
+            $.MessageBox({
+                 buttonDone: "Yes",
+                 buttonFail: "No",
+                 message: "Are you sure you want to  update?"
+             }).done(function () {
+                 $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("CreateEmployeeAuthorization", "Employee")',
+                     data: formData,
+                     async: false,
+                     success: function (data) {
+                         $(container).html("");
+                         $(container).html(data);
+                         SuccessAlert("Updated Succesfully.", 2500);
+                     },
+                     error: function (data) {
+                         debugger;
+                         ErrorAlert(data.responseText, 15000)
+                     },
+                     cache: false,
+                     contentType: false,
+                     processData: false
+                 })
+             }).fail(function () {
+
+             });
+             return false;
+        })
+    })
+
+</script>

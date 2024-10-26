@@ -1,0 +1,150 @@
+﻿@model  List<Loader.ViewModel.Metadata.FgetStoreTransferItemPening_ResultMetadata>
+
+
+@{
+    ViewBag.Title = "Request Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="box box-success">
+    <div class="box-header with-border">
+        <h3 class="box-title">@ViewBag.Title</h3>
+    </div>
+
+    <div>
+        <a href="/Transfer/Storetransfer" class="btn btn-sm btn-default" style="margin-left:5px">Back List</a>
+    </div>
+
+    <div class="box-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="ItemEntry" class="table mertosmall table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Unit Of Measure</th>
+                                <th>Purpose</th>
+                                <th>Business Unit</th>
+                                <th>Investment Code</th>
+                                <th>Balance</th>
+                                <th>Rem Transfer</th>
+                                <th>Transfer Qnty</th>
+                                <th>Store Remarks</th>
+                                @*<th>Action</th>*@
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.Where(x => x.ReqQnty == x.TrQnty).ToList().Count() != Model.Count())
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.Partial("_AddNewItem", item)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="7"> No Items Left to be Transfered.</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                @Html.Partial("_AddNewItem")
+                            }
+
+
+                        </tbody>
+                        @if(Model != null)
+                        {
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        @{Html.RenderAction("_StoreRemarks", "Transfer");
+
+}
+                                    </td>
+                                    <td colspan="6">
+                                        <input type="button" class="btn btn-info pull-right BtnProcurement" value="Stock Out" disabled />
+                                        <input type="button" class="btn btn-info pull-right hidden BtnReturnTransfer" value="Return to Transfer" />
+                                    </td>
+
+                                    <td colspan="1">
+                                        <input id="BtnStoreTransferSubmit" type="button" value="Transfer" class="btn btn-success" />
+                                        <input type="submit" class="btn btn-success hidden pull-right BtnProcurementSubmit" id="BtnProcurementSubmit" value="Confirm StockOut" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        }
+                        else
+                        {
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" style="text-align:right">
+                                        <input @*id="BtnSubmit"*@ type="submit" value="Request" class="btn btn-sm btn-success" />
+                                        &nbsp;
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-info">Add New Item</a>
+                                        @*<a href="@Url.Action("Create")" class="btn btn-danger">Reset</a>*@
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        }
+
+                    </table>
+
+                    @*Serial and Mac popup message*@
+
+                    <div class="modal fade ItemOverflow" id="ItemModal" data-width="300px" tabindex="-1" role="dialog" style="opacity:10">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModal-label">Message</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <b style="position:center" class="ItemMsg"></b>
+                                </div>
+                                <div class="modal-footer footer">
+                                    <button class="btn btn-primary" data-dismiss="modal" id="btnOk">Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade ItemDetailConfirm" id="ItemModal" data-width="300px" tabindex="-1" role="dialog" style="opacity:10">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModal-label">Message</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <b style="position:center" class="ItemDetailMsg"></b>
+                                    <input type="hidden" class="hiddenRDId" value="" />
+                                    <input type="hidden" class="hiddenTRId" value="" />
+                                    <input type="hidden" class="hiddenItemName" value="" />
+                                </div>
+                                <div class="modal-footer footer">
+                                    <button class="btn btn-info" data-dismiss="modal" id="DetailBtnYes">Yes</button>
+                                    <button class="btn btn-primary" id="DetailsBtnNo" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

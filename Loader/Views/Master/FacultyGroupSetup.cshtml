@@ -1,0 +1,65 @@
+﻿
+@model List<Loader.ViewModel.Grade.FacultyGroupSetupVM>
+@{
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+
+    var sn = 0;
+}
+
+<div class="container">
+    <div>
+        <h3>List</h3>
+        <span style="float: right; cursor: pointer; margin-bottom:5px;">
+            @Html.ActionLink("Add New", "AddFacultyGroup", "Master", htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+        </span>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>SN.</th>
+                <th>Faculty Group</th>
+                <th>Subject Name</th>
+                <th>Subject Code</th>
+                <th>Subject Type</th>
+                <th>Prefix</th>
+                <th>FullMarks</th>
+                <th>PassMarks</th>
+                <th>Aciton</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @(sn+=1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FacultyGroupName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.SubjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.SubjectCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.SubjectType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Prefix)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FullMarks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Passmarks)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "UpdateSubject", "Master", new { id = item.FGSId }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,13 @@
+﻿@model Loader.Models.StoreTransferMain
+
+
+@*@{
+        ViewBag.Title = "_StoreRemarks";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
+
+@Html.TextAreaFor(model => model.Remarks, new { @class = "", Placeholder = "Store Remarks", @rows = 2, @cols = 30, @style = "border-radius:4px;max-width: 233px;max-height: 66px;", @id= "StoreRemarks" })
+
+@Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+
+

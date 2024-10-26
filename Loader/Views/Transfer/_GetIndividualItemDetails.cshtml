@@ -1,0 +1,191 @@
+﻿@model IEnumerable<Loader.Models.StoreTransferItemDetails>
+
+
+@{
+    //ViewBag.Title = "_GetIndividualItemDetails";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+}
+
+@{
+    int Count = 0;
+    Loader.Repository.GenericUnitOfWork uow = new Loader.Repository.GenericUnitOfWork();
+}
+@if (ViewBag.Function == "ReportDetailPopUp")
+{
+    <div class="modal-dialog">
+
+        <div class="header" style="padding-top:0px">
+            <h4 class="modal-title">Item Details</h4>
+        </div>
+        @if (Model.Count() != 0)
+        {
+            <div style="max-height:210px; overflow:auto; overflow-x:auto">
+                <table class="table table-hover table-responsive DepTransfer GetMacSerialNoTable" border="1">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                S/No
+                            </th>
+                            <th>
+                                Serial No
+                            </th>
+                            <th>
+                                Mac No
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @(Count+=1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(x => item.SerialNo)
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(x => item.MacNo)
+                                </td>
+                            </tr>
+                        }
+
+
+                    </tbody>
+
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="box-body">
+                <h4 class="text-info" style="text-align:center">No Mac or Serial Number Found...</h4>
+            </div>
+
+        }
+
+
+    </div>
+}
+else
+{
+    if (Model.Count() != 0)
+    {
+        <table class="table table-hover table-responsive DepTransfer GetMacSerialNoTable" border="1">
+
+            <thead>
+                <tr>
+                    <th>
+                        S/No
+                    </th>
+                    <th>
+                        Serial No
+                    </th>
+                    <th>
+                        Mac No
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @Html.HiddenFor(model => item.STIDId, new { @id = "STIDId" })
+
+                        <td>
+                            @(Count += 1)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(x => item.SerialNo)*@
+                            @Html.TextBoxFor(x => item.SerialNo, new { @class = "form-control", @id = "SerialNo" })
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(x => item.MacNo)*@
+                            @Html.TextBoxFor(x => item.MacNo, new { @class = "form-control", @id = "MacNo" })
+                        </td>
+                        <td>
+
+                            <a id="editMacSerial"><i class="fa fa-pencil" style="cursor:pointer; color:orange; margin-right:4px;"></i></a>
+                            <a id="deleteMacSerial"><i class="fa fa-trash" style="cursor:pointer; color:orangered"></i></a>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+
+        </table>
+    }
+    else
+    {
+        <div class="box-body">
+            <h4 class="text-info" style="text-align:center">No Mac or Serial Number Found...</h4>
+        </div>
+
+    }
+}
+
+<script>
+    $(document).on("click", "#editMacSerial", function (e) {
+        debugger;
+        e.stopImmediatePropagation();
+        var STIDId = $(this).closest("tr").find("#STIDId").val();
+        var SerialNo = $(this).closest("tr").find("#serialNo").val();
+        var MacNo = $(this).closest("tr").find("#macNo").val();
+
+        var data = { STIDId: STIDId, SerialNo: SerialNo, MacNo: MacNo };
+        var url = "/RequestTransfer/_UpdateSerialMacNo";
+        $.MessageBox({
+            buttonDone: "Yes",
+            buttonFail: "No",
+            message: "Are You Sure You Want To Edit?"
+        }).done(function () {
+            $.get(url, data, function (data) {
+                $("section.content").html("");
+                $("section.content").html(data);
+            });
+            SuccessAlert("Items Updated Successfully!", 1000)
+            return false;
+        }).fail(function () {
+
+        });
+    });
+
+
+    //delete Mac Serial No
+
+    $(document).on("click", "#deleteMacSerial", function (e) {
+        debugger;
+        e.stopImmediatePropagation();
+        var STIDId = $(this).closest("tr").find("#STIDId").val();
+        var data = { STIDId: STIDId, Flag: true };
+        var url = "/RequestTransfer/_DeleteSerialMacNo"
+
+        $.MessageBox({
+            buttonDone: "Yes",
+            buttonFail: "No",
+            message: "Are you sure you want to remove?"
+        }).done(function () {
+            $.get(url, data, function (data) {
+                $("section.content").html("");
+                $("section.content").html(data);
+            });
+            SuccessAlert("Items Remove Successfully!", 1000)
+            return false;
+        }).fail(function () {
+
+        })
+    });
+            
+
+                
+</script>
+
+

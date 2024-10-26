@@ -1,0 +1,51 @@
+﻿.Txt-Input, .datepicker {
+    border: solid 1px;
+    width: 287px;
+    height: 27px;
+    border-radius: 6px;
+    padding-left: 10px;
+    font-size: 15px;
+}
+
+.Upper-Form {
+    height: auto;
+    padding: 5px;
+    background-color: white;
+    padding-top: 15px;
+}
+
+.Input-Group {
+    height: fit-content;
+    padding: 5px;
+}
+
+.Field-Name {
+    font-size: 15px;
+    font-weight: bold;
+    width: 170px;
+}
+
+.calendar-icon {
+    position: relative;
+    right: 34px;
+    top: 49%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+    .calendar-icon i {
+        font-size: 30px;
+    }
+
+.qnty-rate, is-expiry {
+    width: 85px;
+}
+
+.Table-Form {
+    width: 100%;
+    background-color: white;
+    margin-top: 8px;
+    height: fit-content;
+    padding: 5px;
+    overflow: auto;
+}

@@ -1,0 +1,80 @@
+﻿@model List<Loader.ViewModel.Grade.SubjectCreateVM>
+
+@{
+    Layout = null;
+
+    var sn = 0;
+
+}
+<div class="container">
+    <div>
+        <h3>Faculty List</h3>
+        <span style="float: right; cursor: pointer; margin-bottom:5px;">
+            @Html.ActionLink("Add New", "AddSubject", "Master", htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+        </span>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>SN.</th>
+                <th>Subject Code</th>
+                <th>Subject Name</th>
+                <th>Theory FullMarks</th>
+                <th>Theory Credit Hour</th>
+                <td>Internal Subject Code</td>
+                <th>Internal Subject Name</th>
+                <th>Internal FullMarks</th>
+                <th>Internal Credit Hour</th>
+                <th>FullMarks</th>
+                <th>Status Name</th>
+                <th>Aciton</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @(sn+=1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ThSubjectCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ThSubjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ThFullMarks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ThCreditHR)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.INSubCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.INSubjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.INFullMarks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.INCreditHR)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.FullMarks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.StatusName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "UpdateSubList", "Master", new { id = item.Sid }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
